@@ -1,0 +1,477 @@
+/* ============================================================
+   SilverCare Connect — Global Stylesheet
+   ============================================================ */
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-primary:    #1a5e8a;
+  --color-primary-dk: #134668;
+  --color-accent:     #f5a623;
+  --color-bg:         #ffffff;
+  --color-surface:    #f4f7fb;
+  --color-text:       #1a1a1a;
+  --color-muted:      #555555;
+  --color-border:     #d0dce9;
+  --color-banner-bg:  #fef3cd;
+  --color-banner-txt: #7a5a00;
+  --font-base:        1rem;
+  --font-lg:          1.125rem;
+  --font-xl:          1.5rem;
+  --font-2xl:         2rem;
+  --font-3xl:         2.75rem;
+  --radius:           0.5rem;
+  --shadow:           0 2px 8px rgba(0, 0, 0, 0.08);
+  --max-w:            900px;
+  --transition:       0.2s ease;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.65;
+}
+
+/* ---------- Skip to content (a11y) ---------- */
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: 0;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  z-index: 1000;
+  font-weight: 600;
+  transition: top var(--transition);
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ---------- Banner ---------- */
+.banner {
+  background: var(--color-banner-bg);
+  color: var(--color-banner-txt);
+  text-align: center;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Nav ---------- */
+header {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.nav-brand {
+  font-size: var(--font-xl);
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+}
+.nav-brand:hover, .nav-brand:focus {
+  text-decoration: underline;
+}
+
+nav a {
+  color: #dce9f5;
+  text-decoration: none;
+  font-size: 0.95rem;
+  margin-left: 1.25rem;
+}
+nav a:hover, nav a:focus {
+  color: #fff;
+  text-decoration: underline;
+}
+nav a[aria-current="page"] {
+  color: #fff;
+  font-weight: 600;
+  border-bottom: 2px solid var(--color-accent);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dk) 100%);
+  color: #fff;
+  text-align: center;
+  padding: 5rem 1.5rem;
+}
+
+.hero h1 {
+  font-size: clamp(var(--font-2xl), 5vw, var(--font-3xl));
+  font-weight: 800;
+  line-height: 1.2;
+  max-width: 720px;
+  margin: 0 auto 1rem;
+}
+
+.hero p {
+  font-size: var(--font-lg);
+  max-width: 620px;
+  margin: 0 auto 2rem;
+  opacity: 0.92;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: var(--color-accent);
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: var(--font-lg);
+  padding: 0.85rem 2.25rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: background var(--transition), transform var(--transition);
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background: #e0941a;
+  transform: translateY(-1px);
+}
+.btn-primary:focus {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+/* ---------- Sections ---------- */
+.section {
+  padding: 4rem 1.5rem;
+}
+
+.section--alt {
+  background: var(--color-surface);
+}
+
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.section-label {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.4rem;
+}
+
+h2 {
+  font-size: clamp(var(--font-xl), 3vw, var(--font-2xl));
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.lead {
+  font-size: var(--font-lg);
+  color: var(--color-muted);
+  margin-bottom: 2.5rem;
+}
+
+/* ---------- Steps (How It Works) ---------- */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.step {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.75rem 1.5rem;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: var(--font-lg);
+  margin-bottom: 1rem;
+}
+
+.step h3 {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* ---------- Benefits list ---------- */
+.benefits {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.benefits li {
+  background: var(--color-bg);
+  border-left: 4px solid var(--color-primary);
+  padding: 1rem 1.25rem;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  box-shadow: var(--shadow);
+}
+
+.benefits li strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--color-primary-dk);
+}
+
+/* ---------- Table ---------- */
+.table-wrap {
+  overflow-x: auto;
+  margin-top: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+thead {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+thead th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--color-surface);
+}
+
+tbody td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ---------- Footer ---------- */
+footer {
+  background: var(--color-primary-dk);
+  color: #c8dcea;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+footer .footer-brand {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  color: #fff;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+footer p {
+  margin: 0.3rem 0;
+}
+
+footer a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+footer a:hover, footer a:focus {
+  color: #ffd580;
+}
+
+.footer-disclaimer {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  opacity: 0.75;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---------- Language switcher ---------- */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.lang-switcher button {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.5);
+  color: #dce9f5;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background var(--transition), color var(--transition);
+}
+.lang-switcher button:hover, .lang-switcher button:focus,
+.lang-switcher button[aria-pressed="true"] {
+  background: #fff;
+  color: var(--color-primary-dk);
+}
+
+/* ---------- Font size controls (a11y) ---------- */
+.a11y-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: #dce9f5;
+}
+.a11y-controls button {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #dce9f5;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background var(--transition), color var(--transition);
+}
+.a11y-controls button:hover, .a11y-controls button:focus {
+  background: #fff;
+  color: var(--color-primary-dk);
+}
+
+.a11y-bar {
+  background: var(--color-primary-dk);
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.a11y-bar-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0.4rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ---------- High-contrast mode ---------- */
+@media (prefers-contrast: more) {
+  :root {
+    --color-primary:    #003f6b;
+    --color-primary-dk: #002845;
+    --color-text:       #000000;
+    --color-muted:      #333333;
+    --color-border:     #000000;
+  }
+  .step, .benefits li {
+    border-color: #000;
+  }
+}
+
+/* Toggled high-contrast class */
+body.high-contrast {
+  --color-primary:    #003f6b;
+  --color-primary-dk: #002845;
+  --color-bg:         #ffffff;
+  --color-text:       #000000;
+  --color-muted:      #1a1a1a;
+  --color-border:     #000000;
+  --color-surface:    #e8ecf0;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Toggled reduce-motion class */
+body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* ---------- Facility page extras ---------- */
+.req-list {
+  list-style: none;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.req-list li::before {
+  content: "✓ ";
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.note-box {
+  background: var(--color-banner-bg);
+  border-left: 4px solid var(--color-accent);
+  color: var(--color-banner-txt);
+  padding: 0.9rem 1.2rem;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.map-link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* ---------- Utility ---------- */
+.mt-1  { margin-top: 0.5rem; }
+.mt-2  { margin-top: 1rem; }
+.mt-3  { margin-top: 1.5rem; }
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

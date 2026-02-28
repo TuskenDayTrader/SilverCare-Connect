@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SilverCare Connect makes it easy to schedule a short, supported video session with your loved one at their assisted living facility. We handle the tech. You just show up." />
+  <title>SilverCare Connect — Helping Families Stay Close</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Skip to main content (screen readers / keyboard) -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Persistent pilot banner -->
+  <div class="banner" role="status" aria-live="polite">
+    🟡 Pilot Demo — No payments collected. Session requests only.
+  </div>
+
+  <!-- Accessibility & language bar -->
+  <div class="a11y-bar" aria-label="Accessibility and language options">
+    <div class="a11y-bar-inner">
+      <!-- Font-size controls -->
+      <div class="a11y-controls" role="group" aria-label="Adjust text size">
+        <span>Text size:</span>
+        <button id="font-decrease" aria-label="Decrease text size" onclick="adjustFontSize(-1)">A−</button>
+        <button id="font-reset"    aria-label="Reset text size"     onclick="adjustFontSize(0)">A</button>
+        <button id="font-increase" aria-label="Increase text size"  onclick="adjustFontSize(1)">A+</button>
+      </div>
+
+      <!-- High-contrast toggle -->
+      <button
+        class="a11y-controls"
+        style="border:1px solid rgba(255,255,255,0.4);background:transparent;color:#dce9f5;padding:0.2rem 0.7rem;border-radius:0.25rem;cursor:pointer;font-size:0.8rem;"
+        id="contrast-toggle"
+        aria-pressed="false"
+        onclick="toggleContrast()"
+      >High Contrast</button>
+
+      <!-- Reduce motion toggle -->
+      <button
+        class="a11y-controls"
+        style="border:1px solid rgba(255,255,255,0.4);background:transparent;color:#dce9f5;padding:0.2rem 0.7rem;border-radius:0.25rem;cursor:pointer;font-size:0.8rem;"
+        id="motion-toggle"
+        aria-pressed="false"
+        onclick="toggleMotion()"
+      >Reduce Motion</button>
+
+      <!-- Language switcher -->
+      <div class="lang-switcher" role="group" aria-label="Select language">
+        <span style="color:#dce9f5;font-size:0.8rem;">Lang:</span>
+        <button lang="en" aria-pressed="true"  data-lang="en" onclick="setLang('en')">English</button>
+        <button lang="es" aria-pressed="false" data-lang="es" onclick="setLang('es')">Español</button>
+        <button lang="zh" aria-pressed="false" data-lang="zh" onclick="setLang('zh')">中文</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header / Nav -->
+  <header>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="SilverCare Connect home">SilverCare Connect</a>
+      <nav aria-label="Primary navigation">
+        <a href="index.html" aria-current="page" data-i18n="nav.home">Home</a>
+        <a href="facility.html" data-i18n="nav.facility">Facility Partners</a>
+        <a href="#request" data-i18n="nav.request">Request a Session</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ==================== HERO ==================== -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <h1 id="hero-heading" data-i18n="hero.headline">Helping Families Stay Close — Even from a Distance</h1>
+      <p data-i18n="hero.sub">
+        SilverCare Connect makes it easy to schedule a short, supported video session
+        with your loved one at their assisted living facility.
+        We handle the tech. You just show up.
+      </p>
+      <a href="#request" class="btn-primary" data-i18n="hero.cta">Request a Session</a>
+    </section>
+
+    <!-- ==================== HOW IT WORKS ==================== -->
+    <section class="section section--alt" aria-labelledby="how-heading">
+      <div class="container">
+        <p class="section-label" aria-hidden="true" data-i18n="how.label">How It Works</p>
+        <h2 id="how-heading" data-i18n="how.heading">Three Simple Steps</h2>
+        <p class="lead" data-i18n="how.lead">From request to connection — we take care of every detail.</p>
+
+        <ol class="steps" aria-label="Steps to connect with your loved one">
+
+          <li class="step">
+            <span class="step-number" aria-hidden="true">1</span>
+            <h3 data-i18n="how.step1.title">Request a Time</h3>
+            <p data-i18n="how.step1.desc">
+              Pick a day and time that works for your family.
+              Monday–Wednesday, 8 AM – 8 PM.
+            </p>
+          </li>
+
+          <li class="step">
+            <span class="step-number" aria-hidden="true">2</span>
+            <h3 data-i18n="how.step2.title">We Coordinate</h3>
+            <p data-i18n="how.step2.desc">
+              SilverCare Connect confirms availability with facility staff —
+              no surprises, no disruption to routines.
+            </p>
+          </li>
+
+          <li class="step">
+            <span class="step-number" aria-hidden="true">3</span>
+            <h3 data-i18n="how.step3.title">Connect</h3>
+            <p data-i18n="how.step3.desc">
+              A 30-minute Family Connect Session with on-site tech support
+              so the call just works.
+            </p>
+          </li>
+
+        </ol>
+      </div>
+    </section>
+
+    <!-- ==================== WHY SILVERCARE ==================== -->
+    <section class="section" aria-labelledby="why-heading">
+      <div class="container">
+        <p class="section-label" aria-hidden="true" data-i18n="why.label">Why SilverCare Connect?</p>
+        <h2 id="why-heading" data-i18n="why.heading">Built for Families. Designed for Residents.</h2>
+
+        <ul class="benefits" aria-label="Benefits of SilverCare Connect">
+          <li>
+            <strong data-i18n="why.b1.title">No tech headaches.</strong>
+            <span data-i18n="why.b1.desc">We set up and troubleshoot on-site so your loved one doesn't have to.</span>
+          </li>
+          <li>
+            <strong data-i18n="why.b2.title">Built for accessibility.</strong>
+            <span data-i18n="why.b2.desc">Multi-language support (English, Spanish, Chinese), adjustable fonts, high contrast, reduced motion, and screen reader friendly.</span>
+          </li>
+          <li>
+            <strong data-i18n="why.b3.title">Respects facility routines.</strong>
+            <span data-i18n="why.b3.desc">Every session is coordinated with staff — never dropped in unannounced.</span>
+          </li>
+          <li>
+            <strong data-i18n="why.b4.title">Simple for families.</strong>
+            <span data-i18n="why.b4.desc">One request form. One confirmation. One connected moment.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== PILOT DETAILS ==================== -->
+    <section class="section section--alt" aria-labelledby="pilot-heading">
+      <div class="container">
+        <p class="section-label" aria-hidden="true" data-i18n="pilot.label">Pilot Program</p>
+        <h2 id="pilot-heading" data-i18n="pilot.heading">Pilot Details</h2>
+
+        <div class="table-wrap">
+          <table aria-label="Pilot program details">
+            <thead>
+              <tr>
+                <th scope="col" data-i18n="pilot.col.detail">Detail</th>
+                <th scope="col" data-i18n="pilot.col.info">Info</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-i18n="pilot.row1.label">Session length</td>
+                <td data-i18n="pilot.row1.value">30 minutes</td>
+              </tr>
+              <tr>
+                <td data-i18n="pilot.row2.label">Days available</td>
+                <td data-i18n="pilot.row2.value">Monday, Tuesday, Wednesday</td>
+              </tr>
+              <tr>
+                <td data-i18n="pilot.row3.label">Hours</td>
+                <td data-i18n="pilot.row3.value">8:00 AM – 8:00 PM (local time)</td>
+              </tr>
+              <tr>
+                <td data-i18n="pilot.row4.label">Pilot area</td>
+                <td data-i18n="pilot.row4.value">Pinellas County, FL (~20 mi radius)</td>
+              </tr>
+              <tr>
+                <td data-i18n="pilot.row5.label">Cancellation</td>
+                <td data-i18n="pilot.row5.value">24 hours notice (planned)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== REQUEST FORM ==================== -->
+    <section class="section" id="request" aria-labelledby="request-heading">
+      <div class="container">
+        <p class="section-label" aria-hidden="true" data-i18n="form.label">Get Started</p>
+        <h2 id="request-heading" data-i18n="form.heading">Request a Session</h2>
+        <p class="lead" data-i18n="form.lead">
+          Fill out the form below and we'll confirm availability with the facility and follow up with you directly.
+        </p>
+
+        <form
+          id="session-request-form"
+          aria-label="Session request form"
+          novalidate
+          onsubmit="handleFormSubmit(event)"
+          style="max-width:520px;"
+        >
+
+          <div style="margin-bottom:1.25rem;">
+            <label for="family-name" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.name">Your Name</label>
+            <input
+              type="text"
+              id="family-name"
+              name="family-name"
+              autocomplete="name"
+              required
+              aria-required="true"
+              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;"
+              data-i18n-placeholder="form.field.name.placeholder"
+              placeholder="Full name"
+            />
+          </div>
+
+          <div style="margin-bottom:1.25rem;">
+            <label for="contact-email" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.email">Email Address</label>
+            <input
+              type="email"
+              id="contact-email"
+              name="contact-email"
+              autocomplete="email"
+              required
+              aria-required="true"
+              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;"
+              data-i18n-placeholder="form.field.email.placeholder"
+              placeholder="you@example.com"
+            />
+          </div>
+
+          <div style="margin-bottom:1.25rem;">
+            <label for="resident-name" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.resident">Resident's Name</label>
+            <input
+              type="text"
+              id="resident-name"
+              name="resident-name"
+              required
+              aria-required="true"
+              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;"
+              data-i18n-placeholder="form.field.resident.placeholder"
+              placeholder="Resident's full name"
+            />
+          </div>
+
+          <div style="margin-bottom:1.25rem;">
+            <label for="preferred-date" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.date">Preferred Date</label>
+            <input
+              type="date"
+              id="preferred-date"
+              name="preferred-date"
+              required
+              aria-required="true"
+              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;"
+            />
+          </div>
+
+          <div style="margin-bottom:1.25rem;">
+            <label for="preferred-time" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.time">Preferred Time</label>
+            <select
+              id="preferred-time"
+              name="preferred-time"
+              required
+              aria-required="true"
+              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;background:var(--color-bg);"
+            >
+              <option value="" disabled selected data-i18n="form.field.time.placeholder">Select a time slot</option>
+              <option value="08:00">8:00 AM</option>
+              <option value="09:00">9:00 AM</option>
+              <option value="10:00">10:00 AM</option>
+              <option value="11:00">11:00 AM</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="13:00">1:00 PM</option>
+              <option value="14:00">2:00 PM</option>
+              <option value="15:00">3:00 PM</option>
+              <option value="16:00">4:00 PM</option>
+              <option value="17:00">5:00 PM</option>
+              <option value="18:00">6:00 PM</option>
+              <option value="19:00">7:00 PM</option>
+              <option value="20:00">8:00 PM</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom:1.75rem;">
+            <label for="notes" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.notes">Additional Notes <span style="font-weight:400;color:var(--color-muted);">(optional)</span></label>
+            <textarea
+              id="notes"
+              name="notes"
+              rows="3"
+              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;resize:vertical;"
+              data-i18n-placeholder="form.field.notes.placeholder"
+              placeholder="Anything we should know?"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" data-i18n="form.submit">Submit Request</button>
+
+          <p id="form-status" role="status" aria-live="polite" style="margin-top:1rem;font-weight:600;"></p>
+
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <span class="footer-brand">SilverCare Connect</span>
+    <p data-i18n="footer.tagline">Reducing isolation, one session at a time.</p>
+    <p class="mt-2">
+      <span data-i18n="footer.questions">Questions?</span>
+      <a href="mailto:contact@example.com" data-i18n="footer.contact">Contact us</a>
+    </p>
+    <p class="mt-2">
+      <a href="facility.html" data-i18n="footer.facility">Facility Partner Information</a>
+    </p>
+    <p class="footer-disclaimer" data-i18n="footer.disclaimer">
+      This is a pilot demo. No payments are collected. All submissions are session requests confirmed manually with facility staff.
+    </p>
+  </footer>
+
+  <!-- ==================== I18N STRINGS ==================== -->
+  <script>
+    const translations = {
+      en: {
+        "nav.home": "Home",
+        "nav.facility": "Facility Partners",
+        "nav.request": "Request a Session",
+        "hero.headline": "Helping Families Stay Close — Even from a Distance",
+        "hero.sub": "SilverCare Connect makes it easy to schedule a short, supported video session with your loved one at their assisted living facility. We handle the tech. You just show up.",
+        "hero.cta": "Request a Session",
+        "how.label": "How It Works",
+        "how.heading": "Three Simple Steps",
+        "how.lead": "From request to connection — we take care of every detail.",
+        "how.step1.title": "Request a Time",
+        "how.step1.desc": "Pick a day and time that works for your family. Monday–Wednesday, 8 AM – 8 PM.",
+        "how.step2.title": "We Coordinate",
+        "how.step2.desc": "SilverCare Connect confirms availability with facility staff — no surprises, no disruption to routines.",
+        "how.step3.title": "Connect",
+        "how.step3.desc": "A 30-minute Family Connect Session with on-site tech support so the call just works.",
+        "why.label": "Why SilverCare Connect?",
+        "why.heading": "Built for Families. Designed for Residents.",
+        "why.b1.title": "No tech headaches.",
+        "why.b1.desc": "We set up and troubleshoot on-site so your loved one doesn't have to.",
+        "why.b2.title": "Built for accessibility.",
+        "why.b2.desc": "Multi-language support (English, Spanish, Chinese), adjustable fonts, high contrast, reduced motion, and screen reader friendly.",
+        "why.b3.title": "Respects facility routines.",
+        "why.b3.desc": "Every session is coordinated with staff — never dropped in unannounced.",
+        "why.b4.title": "Simple for families.",
+        "why.b4.desc": "One request form. One confirmation. One connected moment.",
+        "pilot.label": "Pilot Program",
+        "pilot.heading": "Pilot Details",
+        "pilot.col.detail": "Detail",
+        "pilot.col.info": "Info",
+        "pilot.row1.label": "Session length",
+        "pilot.row1.value": "30 minutes",
+        "pilot.row2.label": "Days available",
+        "pilot.row2.value": "Monday, Tuesday, Wednesday",
+        "pilot.row3.label": "Hours",
+        "pilot.row3.value": "8:00 AM – 8:00 PM (local time)",
+        "pilot.row4.label": "Pilot area",
+        "pilot.row4.value": "Pinellas County, FL (~20 mi radius)",
+        "pilot.row5.label": "Cancellation",
+        "pilot.row5.value": "24 hours notice (planned)",
+        "form.label": "Get Started",
+        "form.heading": "Request a Session",
+        "form.lead": "Fill out the form below and we'll confirm availability with the facility and follow up with you directly.",
+        "form.field.name": "Your Name",
+        "form.field.name.placeholder": "Full name",
+        "form.field.email": "Email Address",
+        "form.field.email.placeholder": "you@example.com",
+        "form.field.resident": "Resident's Name",
+        "form.field.resident.placeholder": "Resident's full name",
+        "form.field.date": "Preferred Date",
+        "form.field.time": "Preferred Time",
+        "form.field.time.placeholder": "Select a time slot",
+        "form.field.notes": "Additional Notes",
+        "form.field.notes.placeholder": "Anything we should know?",
+        "form.submit": "Submit Request",
+        "form.success": "✅ Your request has been submitted! We'll be in touch shortly to confirm your session.",
+        "footer.tagline": "Reducing isolation, one session at a time.",
+        "footer.questions": "Questions?",
+        "footer.contact": "Contact us",
+        "footer.facility": "Facility Partner Information",
+        "footer.disclaimer": "This is a pilot demo. No payments are collected. All submissions are session requests confirmed manually with facility staff."
+      },
+      es: {
+        "nav.home": "Inicio",
+        "nav.facility": "Socios de Instalaciones",
+        "nav.request": "Solicitar una Sesión",
+        "hero.headline": "Ayudando a las familias a mantenerse cerca — incluso desde la distancia",
+        "hero.sub": "SilverCare Connect facilita programar una breve sesión de video con su ser querido en su residencia de ancianos. Nosotros nos encargamos de la tecnología. Usted solo aparece.",
+        "hero.cta": "Solicitar una Sesión",
+        "how.label": "Cómo Funciona",
+        "how.heading": "Tres Pasos Sencillos",
+        "how.lead": "Desde la solicitud hasta la conexión — nosotros nos encargamos de cada detalle.",
+        "how.step1.title": "Solicitar un Horario",
+        "how.step1.desc": "Elija un día y una hora que funcione para su familia. Lunes–Miércoles, 8 AM – 8 PM.",
+        "how.step2.title": "Coordinamos",
+        "how.step2.desc": "SilverCare Connect confirma la disponibilidad con el personal de la instalación — sin sorpresas, sin interrupciones a las rutinas.",
+        "how.step3.title": "Conectar",
+        "how.step3.desc": "Una sesión de conexión familiar de 30 minutos con soporte técnico en el lugar para que la llamada simplemente funcione.",
+        "why.label": "¿Por qué SilverCare Connect?",
+        "why.heading": "Construido para familias. Diseñado para residentes.",
+        "why.b1.title": "Sin dolores de cabeza tecnológicos.",
+        "why.b1.desc": "Configuramos y solucionamos problemas en el lugar para que su ser querido no tenga que hacerlo.",
+        "why.b2.title": "Diseñado para la accesibilidad.",
+        "why.b2.desc": "Soporte multilingüe (inglés, español, chino), fuentes ajustables, alto contraste, movimiento reducido y compatible con lectores de pantalla.",
+        "why.b3.title": "Respeta las rutinas de la instalación.",
+        "why.b3.desc": "Cada sesión se coordina con el personal — nunca se presenta sin avisar.",
+        "why.b4.title": "Simple para las familias.",
+        "why.b4.desc": "Un formulario de solicitud. Una confirmación. Un momento de conexión.",
+        "pilot.label": "Programa Piloto",
+        "pilot.heading": "Detalles del Piloto",
+        "pilot.col.detail": "Detalle",
+        "pilot.col.info": "Información",
+        "pilot.row1.label": "Duración de la sesión",
+        "pilot.row1.value": "30 minutos",
+        "pilot.row2.label": "Días disponibles",
+        "pilot.row2.value": "Lunes, Martes, Miércoles",
+        "pilot.row3.label": "Horario",
+        "pilot.row3.value": "8:00 AM – 8:00 PM (hora local)",
+        "pilot.row4.label": "Área piloto",
+        "pilot.row4.value": "Condado de Pinellas, FL (~20 mi de radio)",
+        "pilot.row5.label": "Cancelación",
+        "pilot.row5.value": "Aviso de 24 horas (planificado)",
+        "form.label": "Comenzar",
+        "form.heading": "Solicitar una Sesión",
+        "form.lead": "Complete el formulario a continuación y confirmaremos la disponibilidad con la instalación y nos comunicaremos con usted directamente.",
+        "form.field.name": "Su Nombre",
+        "form.field.name.placeholder": "Nombre completo",
+        "form.field.email": "Correo Electrónico",
+        "form.field.email.placeholder": "usted@ejemplo.com",
+        "form.field.resident": "Nombre del Residente",
+        "form.field.resident.placeholder": "Nombre completo del residente",
+        "form.field.date": "Fecha Preferida",
+        "form.field.time": "Hora Preferida",
+        "form.field.time.placeholder": "Seleccionar un horario",
+        "form.field.notes": "Notas Adicionales",
+        "form.field.notes.placeholder": "¿Algo que debamos saber?",
+        "form.submit": "Enviar Solicitud",
+        "form.success": "✅ ¡Su solicitud ha sido enviada! Nos pondremos en contacto pronto para confirmar su sesión.",
+        "footer.tagline": "Reduciendo el aislamiento, una sesión a la vez.",
+        "footer.questions": "¿Preguntas?",
+        "footer.contact": "Contáctenos",
+        "footer.facility": "Información para Socios de Instalaciones",
+        "footer.disclaimer": "Este es un demo piloto. No se recaudan pagos. Todas las presentaciones son solicitudes de sesión confirmadas manualmente con el personal de la instalación."
+      },
+      zh: {
+        "nav.home": "首页",
+        "nav.facility": "合作机构",
+        "nav.request": "预约探访",
+        "hero.headline": "无论相隔多远，家人始终紧密相连",
+        "hero.sub": "SilverCare Connect 让您轻松在养老院为您的家人预约短暂的视频通话支持服务。我们负责技术，您只需出现。",
+        "hero.cta": "预约探访",
+        "how.label": "服务流程",
+        "how.heading": "三个简单步骤",
+        "how.lead": "从申请到连接——我们处理每一个细节。",
+        "how.step1.title": "预约时间",
+        "how.step1.desc": "选择适合家人的日期和时间。周一至周三，上午8点至晚上8点。",
+        "how.step2.title": "我们协调",
+        "how.step2.desc": "SilverCare Connect 与机构工作人员确认时间——不会有任何意外，不会打乱日常安排。",
+        "how.step3.title": "开始连接",
+        "how.step3.desc": "30分钟的家庭连接会议，配备现场技术支持，确保通话顺畅。",
+        "why.label": "为什么选择SilverCare Connect？",
+        "why.heading": "为家庭而建，为居民而设。",
+        "why.b1.title": "无技术困扰。",
+        "why.b1.desc": "我们在现场设置和排除故障，让您的家人无需担心技术问题。",
+        "why.b2.title": "注重无障碍功能。",
+        "why.b2.desc": "多语言支持（英语、西班牙语、中文）、可调字体、高对比度、减少动效，并支持屏幕阅读器。",
+        "why.b3.title": "尊重机构日程。",
+        "why.b3.desc": "每次会话都与工作人员协调——绝不会在未通知的情况下到访。",
+        "why.b4.title": "家庭操作简便。",
+        "why.b4.desc": "一个申请表。一次确认。一次连接时刻。",
+        "pilot.label": "试点计划",
+        "pilot.heading": "试点详情",
+        "pilot.col.detail": "项目",
+        "pilot.col.info": "详情",
+        "pilot.row1.label": "会话时长",
+        "pilot.row1.value": "30分钟",
+        "pilot.row2.label": "可用日期",
+        "pilot.row2.value": "周一、周二、周三",
+        "pilot.row3.label": "服务时间",
+        "pilot.row3.value": "上午8:00 – 晚上8:00（当地时间）",
+        "pilot.row4.label": "试点区域",
+        "pilot.row4.value": "佛罗里达州皮内拉斯县（约20英里半径）",
+        "pilot.row5.label": "取消政策",
+        "pilot.row5.value": "提前24小时通知（计划中）",
+        "form.label": "开始申请",
+        "form.heading": "预约探访",
+        "form.lead": "填写以下表格，我们将与机构确认时间，并直接与您联系。",
+        "form.field.name": "您的姓名",
+        "form.field.name.placeholder": "全名",
+        "form.field.email": "电子邮件地址",
+        "form.field.email.placeholder": "您的邮箱@例子.com",
+        "form.field.resident": "居民姓名",
+        "form.field.resident.placeholder": "居民全名",
+        "form.field.date": "首选日期",
+        "form.field.time": "首选时间",
+        "form.field.time.placeholder": "选择时间段",
+        "form.field.notes": "其他说明",
+        "form.field.notes.placeholder": "有什么需要我们了解的吗？",
+        "form.submit": "提交申请",
+        "form.success": "✅ 您的申请已提交！我们将尽快与您联系以确认您的会话。",
+        "footer.tagline": "减少孤独，一次会话，一次连接。",
+        "footer.questions": "有疑问？",
+        "footer.contact": "联系我们",
+        "footer.facility": "合作机构信息",
+        "footer.disclaimer": "这是试点演示。不收取任何费用。所有提交的内容均为会话请求，由工作人员手动与机构确认。"
+      }
+    };
+
+    let currentLang = 'en';
+    let baseFontSize = 16;
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      const t = translations[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.textContent = t[key];
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (t[key]) el.placeholder = t[key];
+      });
+      // Update the default time-slot option text
+      const timeDefault = document.querySelector('#preferred-time option[value=""]');
+      if (timeDefault && t['form.field.time.placeholder']) {
+        timeDefault.textContent = t['form.field.time.placeholder'];
+      }
+      // Update aria-pressed on language buttons
+      document.querySelectorAll('.lang-switcher button').forEach(btn => {
+        btn.setAttribute('aria-pressed', btn.getAttribute('data-lang') === lang ? 'true' : 'false');
+      });
+    }
+
+    function adjustFontSize(delta) {
+      if (delta === 0) { baseFontSize = 16; }
+      else { baseFontSize = Math.min(24, Math.max(12, baseFontSize + delta * 2)); }
+      document.documentElement.style.fontSize = baseFontSize + 'px';
+    }
+
+    function toggleContrast() {
+      const btn = document.getElementById('contrast-toggle');
+      const active = document.body.classList.toggle('high-contrast');
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    }
+
+    function toggleMotion() {
+      const btn = document.getElementById('motion-toggle');
+      const active = document.body.classList.toggle('reduce-motion');
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const status = document.getElementById('form-status');
+      const t = translations[currentLang];
+      status.textContent = t['form.success'] || '✅ Your request has been submitted! We\'ll be in touch shortly to confirm your session.';
+      e.target.reset();
+    }
+  </script>
+
+</body>
+</html>

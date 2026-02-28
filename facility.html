@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SilverCare Connect facility partner overview — how we help assisted living facilities offer reliable family video sessions with zero staff burden." />
+  <title>Facility Partners — SilverCare Connect</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Skip to main content -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Persistent pilot banner -->
+  <div class="banner" role="status" aria-live="polite">
+    🟡 Pilot Demo — No payments collected. Session requests only.
+  </div>
+
+  <!-- Accessibility & language bar -->
+  <div class="a11y-bar" aria-label="Accessibility and language options">
+    <div class="a11y-bar-inner">
+      <div class="a11y-controls" role="group" aria-label="Adjust text size">
+        <span>Text size:</span>
+        <button id="font-decrease" aria-label="Decrease text size" onclick="adjustFontSize(-1)">A−</button>
+        <button id="font-reset"    aria-label="Reset text size"     onclick="adjustFontSize(0)">A</button>
+        <button id="font-increase" aria-label="Increase text size"  onclick="adjustFontSize(1)">A+</button>
+      </div>
+      <button
+        class="a11y-controls"
+        style="border:1px solid rgba(255,255,255,0.4);background:transparent;color:#dce9f5;padding:0.2rem 0.7rem;border-radius:0.25rem;cursor:pointer;font-size:0.8rem;"
+        id="contrast-toggle"
+        aria-pressed="false"
+        onclick="toggleContrast()"
+      >High Contrast</button>
+      <button
+        class="a11y-controls"
+        style="border:1px solid rgba(255,255,255,0.4);background:transparent;color:#dce9f5;padding:0.2rem 0.7rem;border-radius:0.25rem;cursor:pointer;font-size:0.8rem;"
+        id="motion-toggle"
+        aria-pressed="false"
+        onclick="toggleMotion()"
+      >Reduce Motion</button>
+      <div class="lang-switcher" role="group" aria-label="Select language">
+        <span style="color:#dce9f5;font-size:0.8rem;">Lang:</span>
+        <button lang="en" aria-pressed="true"  data-lang="en" onclick="setLang('en')">English</button>
+        <button lang="es" aria-pressed="false" data-lang="es" onclick="setLang('es')">Español</button>
+        <button lang="zh" aria-pressed="false" data-lang="zh" onclick="setLang('zh')">中文</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header / Nav -->
+  <header>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="SilverCare Connect home">SilverCare Connect</a>
+      <nav aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="facility.html" aria-current="page">Facility Partners</a>
+        <a href="index.html#request">Request a Session</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ==================== PAGE HERO ==================== -->
+    <section class="hero" aria-labelledby="page-heading">
+      <h1 id="page-heading">Facility Partner Overview</h1>
+      <p>
+        SilverCare Connect is a pilot service that helps families stay connected with residents
+        at assisted living facilities through short, scheduled video sessions —
+        with on-site tech support included.
+      </p>
+      <p style="margin-top:0.5rem;opacity:0.85;font-size:1rem;">
+        We handle the technology. Your staff stays focused on care.
+      </p>
+    </section>
+
+    <!-- ==================== HOW IT WORKS ==================== -->
+    <section class="section section--alt" aria-labelledby="how-heading">
+      <div class="container">
+        <p class="section-label" aria-hidden="true">How It Works</p>
+        <h2 id="how-heading">From Request to Connection</h2>
+
+        <ol class="steps" style="margin-top:2rem;" aria-label="How the service works for facilities">
+          <li class="step">
+            <span class="step-number" aria-hidden="true">1</span>
+            <h3>A Family Requests</h3>
+            <p>A family member requests a session through our website — choosing a preferred date and time.</p>
+          </li>
+          <li class="step">
+            <span class="step-number" aria-hidden="true">2</span>
+            <h3>We Coordinate</h3>
+            <p>We confirm with your facility to ensure the time fits your schedule and routines.</p>
+          </li>
+          <li class="step">
+            <span class="step-number" aria-hidden="true">3</span>
+            <h3>We Arrive On-Site</h3>
+            <p>We set up the tech and support a 30-minute Family Connect Session. No equipment burden on your staff. No disruption to daily programming.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ==================== PILOT DETAILS ==================== -->
+    <section class="section" aria-labelledby="pilot-heading">
+      <div class="container">
+        <p class="section-label" aria-hidden="true">Pilot Program</p>
+        <h2 id="pilot-heading">Pilot Details</h2>
+
+        <div class="table-wrap">
+          <table aria-label="Pilot program details for facility partners">
+            <thead>
+              <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Detail</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Session length</td>
+                <td>30 minutes</td>
+              </tr>
+              <tr>
+                <td>Available days</td>
+                <td>Monday / Tuesday / Wednesday</td>
+              </tr>
+              <tr>
+                <td>Available hours</td>
+                <td>8:00 AM – 8:00 PM (local)</td>
+              </tr>
+              <tr>
+                <td>Service area (pilot)</td>
+                <td>Pinellas County, FL (~20 mi of 27.91, -82.69)</td>
+              </tr>
+              <tr>
+                <td>Cancellation policy</td>
+                <td>24 hours notice (planned)</td>
+              </tr>
+              <tr>
+                <td>Cost to facility</td>
+                <td>None during pilot</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== WHAT WE NEED ==================== -->
+    <section class="section section--alt" aria-labelledby="needs-heading">
+      <div class="container">
+        <p class="section-label" aria-hidden="true">Requirements</p>
+        <h2 id="needs-heading">What We Need from Your Facility</h2>
+
+        <ul class="req-list" aria-label="What we need from your facility">
+          <li>A quiet space with Wi-Fi access (resident room or common area)</li>
+          <li>A brief coordination contact (phone/email) to confirm session times</li>
+          <li>~5 minutes of staff awareness per session (not staff time)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== WHY PARTNER ==================== -->
+    <section class="section" aria-labelledby="why-heading">
+      <div class="container">
+        <p class="section-label" aria-hidden="true">Benefits</p>
+        <h2 id="why-heading">Why Partner with Us?</h2>
+
+        <ul class="benefits" aria-label="Benefits of partnering with SilverCare Connect">
+          <li>
+            <strong>Family satisfaction.</strong>
+            <span>Reliable connection reduces complaints and increases family trust.</span>
+          </li>
+          <li>
+            <strong>Zero staff burden.</strong>
+            <span>We bring the tech and manage the session end-to-end.</span>
+          </li>
+          <li>
+            <strong>Resident well-being.</strong>
+            <span>Consistent family contact is linked to reduced isolation and improved mood.</span>
+          </li>
+          <li>
+            <strong>Accessibility built in.</strong>
+            <span>Our platform supports multiple languages, high contrast, large fonts, and screen readers.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== PRICING ==================== -->
+    <section class="section section--alt" aria-labelledby="pricing-heading">
+      <div class="container">
+        <p class="section-label" aria-hidden="true">Pricing</p>
+        <h2 id="pricing-heading">Planned Pilot Pricing <span style="font-size:1rem;font-weight:400;color:var(--color-muted);">(Family-Facing)</span></h2>
+
+        <div class="table-wrap">
+          <table aria-label="Planned pilot pricing options">
+            <thead>
+              <tr>
+                <th scope="col">Option</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Intro session (1×)</td>
+                <td>$15</td>
+              </tr>
+              <tr>
+                <td>Standard session</td>
+                <td>$29</td>
+              </tr>
+              <tr>
+                <td>Rhythm Packs (planned)</td>
+                <td>2-pack / 4-pack (rolling 30 days)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box" role="note">
+          Pricing is informational only — payments are not implemented in the current demo.
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FACILITY MAP ==================== -->
+    <section class="section" aria-labelledby="map-heading">
+      <div class="container">
+        <p class="section-label" aria-hidden="true">Coverage</p>
+        <h2 id="map-heading">Pilot Facility Map</h2>
+        <p>View the current Pinellas County ALF outreach map:</p>
+        <a
+          href="https://www.batchgeo.com/map/0bab8e4477dc55548d1a79dc440e8ab2"
+          class="map-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View Pinellas County ALF outreach map on BatchGeo (opens in new tab)"
+        >
+          View BatchGeo Map ↗
+        </a>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT ==================== -->
+    <section class="section section--alt" aria-labelledby="contact-heading">
+      <div class="container">
+        <p class="section-label" aria-hidden="true">Get in Touch</p>
+        <h2 id="contact-heading">Interested in Joining the Pilot?</h2>
+        <p class="lead">Reach out — we'd love to connect.</p>
+        <p>
+          <strong>Email:</strong>
+          <a href="mailto:contact@example.com">contact@example.com</a>
+        </p>
+        <p>
+          <a href="index.html#request" class="btn-primary" style="margin-top:1.5rem;display:inline-block;">
+            Request a Family Session
+          </a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <span class="footer-brand">SilverCare Connect</span>
+    <p>Reducing isolation, one session at a time.</p>
+    <p class="mt-2">
+      Questions? <a href="mailto:contact@example.com">Contact us</a>
+    </p>
+    <p class="mt-2">
+      <a href="index.html">Family Homepage</a>
+    </p>
+    <p class="footer-disclaimer">
+      This is a pilot demo. No payments are collected. All submissions are session requests confirmed manually with facility staff.
+    </p>
+  </footer>
+
+  <script>
+    let baseFontSize = 16;
+
+    function adjustFontSize(delta) {
+      if (delta === 0) { baseFontSize = 16; }
+      else { baseFontSize = Math.min(24, Math.max(12, baseFontSize + delta * 2)); }
+      document.documentElement.style.fontSize = baseFontSize + 'px';
+    }
+
+    function toggleContrast() {
+      const btn = document.getElementById('contrast-toggle');
+      const active = document.body.classList.toggle('high-contrast');
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    }
+
+    function toggleMotion() {
+      const btn = document.getElementById('motion-toggle');
+      const active = document.body.classList.toggle('reduce-motion');
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    }
+
+    function setLang(lang) {
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-switcher button').forEach(btn => {
+        btn.setAttribute('aria-pressed', btn.getAttribute('data-lang') === lang ? 'true' : 'false');
+      });
+    }
+  </script>
+
+</body>
+</html>
