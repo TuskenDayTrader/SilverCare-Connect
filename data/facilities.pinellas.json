@@ -1,0 +1,317 @@
+{
+  "region": "Pinellas County, FL",
+  "facilities": [
+    {
+      "id": "sandpiper-alf-saint-petersburg-33707",
+      "name": "Sandpiper ALF",
+      "street": "6439 First Avenue South",
+      "city": "Saint Petersburg",
+      "state": "FL",
+      "zip": "33707",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "azalea-manor-saint-petersburg-33701",
+      "name": "Azalea Manor",
+      "street": "112 12th Ave N",
+      "city": "Saint Petersburg",
+      "state": "FL",
+      "zip": "33701",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "emerald-court-retirement-residences-pinellas-park-33781",
+      "name": "Emerald Court Retirement Residences",
+      "street": "7600 78th Avenue North",
+      "city": "Pinellas Park",
+      "state": "FL",
+      "zip": "33781",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "curlew-care-of-clearwater-clearwater-33761",
+      "name": "Curlew Care of Clearwater",
+      "street": "2730 Curlew Rd",
+      "city": "Clearwater",
+      "state": "FL",
+      "zip": "33761",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "aviata-at-lakeside-oaks-villas-dunedin-34698",
+      "name": "Aviata at Lakeside Oaks Villas",
+      "street": "1059 Virginia St",
+      "city": "Dunedin",
+      "state": "FL",
+      "zip": "34698",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "greenbriar-manor-llc-seminole-33776",
+      "name": "Greenbriar Manor LLC",
+      "street": "7555 131st St N",
+      "city": "Seminole",
+      "state": "FL",
+      "zip": "33776",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "salterra-senior-living-at-largo-largo-33771",
+      "name": "Salterra Senior Living at Largo",
+      "street": "750 Starkey Road",
+      "city": "Largo",
+      "state": "FL",
+      "zip": "33771",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "indian-oaks-largo-33774",
+      "name": "Indian Oaks",
+      "street": "11355 131st Street North",
+      "city": "Largo",
+      "state": "FL",
+      "zip": "33774",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "inn-at-freedom-square-the-seminole-33772",
+      "name": "Inn at Freedom Square (The)",
+      "street": "10801 Johnson Blvd",
+      "city": "Seminole",
+      "state": "FL",
+      "zip": "33772",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "the-barclay-at-pasadena-saint-petersburg-33707",
+      "name": "The Barclay at Pasadena",
+      "street": "1255 Pasadena Ave S",
+      "city": "Saint Petersburg",
+      "state": "FL",
+      "zip": "33707",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "pembrook-place-ii-alf-clearwater-33764",
+      "name": "Pembrook Place II ALF",
+      "street": "1623 Robinhood Ln",
+      "city": "Clearwater",
+      "state": "FL",
+      "zip": "33764",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "heritage-house-assisted-living-facility-clearwater-33764",
+      "name": "Heritage House Assisted Living Facility",
+      "street": "1810 S Belcher Rd",
+      "city": "Clearwater",
+      "state": "FL",
+      "zip": "33764",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "mrm-boarding-home-pinellas-park-33781",
+      "name": "MRM Boarding Home",
+      "street": "6035 72nd Ave N",
+      "city": "Pinellas Park",
+      "state": "FL",
+      "zip": "33781",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "masonic-home-of-florida-saint-petersburg-33704",
+      "name": "Masonic Home of Florida",
+      "street": "3201 1st St NE",
+      "city": "Saint Petersburg",
+      "state": "FL",
+      "zip": "33704",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "windsor-house-clearwater-33756",
+      "name": "Windsor House",
+      "street": "411 Hamilton Crescent",
+      "city": "Clearwater",
+      "state": "FL",
+      "zip": "33756",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "union-house-clearwater-33763",
+      "name": "Union House",
+      "street": "1930 Union St",
+      "city": "Clearwater",
+      "state": "FL",
+      "zip": "33763",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "salterra-senior-living-at-dunedin-dunedin-34698",
+      "name": "Salterra Senior Living at Dunedin",
+      "street": "880 Patricia Avenue",
+      "city": "Dunedin",
+      "state": "FL",
+      "zip": "34698",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "st-mark-village-inc-palm-harbor-34684",
+      "name": "St Mark Village Inc.",
+      "street": "2655 Nebraska Ave",
+      "city": "Palm Harbor",
+      "state": "FL",
+      "zip": "34684",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "st-mark-assisted-living-center-palm-harbor-34684",
+      "name": "St. Mark Assisted Living Center",
+      "street": "880 Highlands Blvd",
+      "city": "Palm Harbor",
+      "state": "FL",
+      "zip": "34684",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "westminster-shores-inc-saint-petersburg-33705",
+      "name": "Westminster Shores Inc.",
+      "street": "125 56 Ave S",
+      "city": "Saint Petersburg",
+      "state": "FL",
+      "zip": "33705",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "westminster-suncoast-saint-petersburg-33705",
+      "name": "Westminster Suncoast",
+      "street": "1095 Pinellas Point Dr S",
+      "city": "Saint Petersburg",
+      "state": "FL",
+      "zip": "33705",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "elison-senior-living-community-of-pinecrest-largo-33770",
+      "name": "Elison Senior Living Community of Pinecrest",
+      "street": "1150 8th Ave SW",
+      "city": "Largo",
+      "state": "FL",
+      "zip": "33770",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "euphorian-house-clearwater-33764",
+      "name": "Euphorian House",
+      "street": "1103 Normandy Rd",
+      "city": "Clearwater",
+      "state": "FL",
+      "zip": "33764",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    },
+    {
+      "id": "oaks-of-clearwater-the-clearwater-33756",
+      "name": "Oaks of Clearwater (The)",
+      "street": "420 Bay Avenue",
+      "city": "Clearwater",
+      "state": "FL",
+      "zip": "33756",
+      "photos": [
+        "images/placeholder-facility-1.svg",
+        "images/placeholder-facility-2.svg",
+        "images/placeholder-facility-3.svg"
+      ]
+    }
+  ]
+}

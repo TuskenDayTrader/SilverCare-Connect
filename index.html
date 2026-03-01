@@ -251,6 +251,43 @@
           </div>
 
           <div style="margin-bottom:1.25rem;">
+            <label for="facility-zip" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.zip">Facility ZIP Code</label>
+            <input
+              type="text"
+              id="facility-zip"
+              name="facility-zip"
+              inputmode="numeric"
+              pattern="[0-9]{5}"
+              maxlength="5"
+              autocomplete="postal-code"
+              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;"
+              data-i18n-placeholder="form.field.zip.placeholder"
+              placeholder="e.g. 33764"
+              oninput="onZipInput(this.value)"
+              aria-describedby="zip-hint"
+            />
+            <span id="zip-hint" style="font-size:0.82rem;color:var(--color-muted);" data-i18n="form.field.zip.hint">Enter ZIP to filter facilities in Pinellas County.</span>
+          </div>
+
+          <div style="margin-bottom:0.75rem;">
+            <label for="facility-select" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.facility">Select Facility <span style="font-weight:400;color:var(--color-muted);" data-i18n="form.field.facility.optional">(optional)</span></label>
+            <select
+              id="facility-select"
+              name="facility-id"
+              disabled
+              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;background:var(--color-bg);"
+              onchange="onFacilitySelect(this.value)"
+              aria-describedby="facility-select-hint"
+            >
+              <option value="" data-i18n="form.field.facility.placeholder">Enter ZIP to see facilities</option>
+            </select>
+            <span id="facility-select-hint" class="visually-hidden">Filtered by ZIP code</span>
+          </div>
+
+          <!-- Facility preview card (shown when a facility is selected) -->
+          <div id="facility-preview" class="facility-preview-card" hidden aria-live="polite" aria-label="Selected facility preview"></div>
+
+          <div style="margin-bottom:1.25rem;">
             <label for="preferred-date" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.date">Preferred Date</label>
             <input
               type="date"
@@ -327,6 +364,8 @@
   </footer>
 
   <!-- ==================== I18N STRINGS ==================== -->
+  <script src="js/facilities.js"></script>
+  <script src="js/demoStore.js"></script>
   <script>
     const translations = {
       en: {
@@ -378,6 +417,12 @@
         "form.field.email.placeholder": "you@example.com",
         "form.field.resident": "Resident's Name",
         "form.field.resident.placeholder": "Resident's full name",
+        "form.field.zip": "Facility ZIP Code",
+        "form.field.zip.placeholder": "e.g. 33764",
+        "form.field.zip.hint": "Enter ZIP to filter facilities in Pinellas County.",
+        "form.field.facility": "Select Facility",
+        "form.field.facility.optional": "(optional)",
+        "form.field.facility.placeholder": "Enter ZIP to see facilities",
         "form.field.date": "Preferred Date",
         "form.field.time": "Preferred Time",
         "form.field.time.placeholder": "Select a time slot",
@@ -440,6 +485,12 @@
         "form.field.email.placeholder": "usted@ejemplo.com",
         "form.field.resident": "Nombre del Residente",
         "form.field.resident.placeholder": "Nombre completo del residente",
+        "form.field.zip": "Código Postal de la Instalación",
+        "form.field.zip.placeholder": "ej. 33764",
+        "form.field.zip.hint": "Ingrese el código postal para filtrar instalaciones en el Condado de Pinellas.",
+        "form.field.facility": "Seleccionar Instalación",
+        "form.field.facility.optional": "(opcional)",
+        "form.field.facility.placeholder": "Ingrese el código postal para ver instalaciones",
         "form.field.date": "Fecha Preferida",
         "form.field.time": "Hora Preferida",
         "form.field.time.placeholder": "Seleccionar un horario",
@@ -502,6 +553,12 @@
         "form.field.email.placeholder": "您的邮箱@例子.com",
         "form.field.resident": "居民姓名",
         "form.field.resident.placeholder": "居民全名",
+        "form.field.zip": "机构邮政编码",
+        "form.field.zip.placeholder": "如 33764",
+        "form.field.zip.hint": "输入邮政编码以筛选皮内拉斯县的机构。",
+        "form.field.facility": "选择机构",
+        "form.field.facility.optional": "（可选）",
+        "form.field.facility.placeholder": "输入邮政编码查看机构",
         "form.field.date": "首选日期",
         "form.field.time": "首选时间",
         "form.field.time.placeholder": "选择时间段",
@@ -563,10 +620,130 @@
 
     function handleFormSubmit(e) {
       e.preventDefault();
-      const status = document.getElementById('form-status');
-      const t = translations[currentLang];
+      var form = e.target;
+      var status = document.getElementById('form-status');
+      var t = translations[currentLang];
+
+      // Persist request + update stats when a facility was selected
+      var facilityId = document.getElementById('facility-select').value;
+      if (typeof DemoStore !== 'undefined' && facilityId) {
+        DemoStore.saveSessionRequest({
+          familyName:    form['family-name'].value,
+          contactEmail:  form['contact-email'].value,
+          residentName:  form['resident-name'].value,
+          facilityId:    facilityId,
+          preferredDate: form['preferred-date'].value,
+          preferredTime: form['preferred-time'].value,
+          notes:         form['notes'].value
+        });
+        DemoStore.incrementFacilityRequest(facilityId);
+      }
+
       status.textContent = t['form.success'] || '✅ Your request has been submitted! We\'ll be in touch shortly to confirm your session.';
-      e.target.reset();
+      form.reset();
+
+      // Reset facility picker UI after submit
+      var preview = document.getElementById('facility-preview');
+      if (preview) preview.hidden = true;
+      var sel = document.getElementById('facility-select');
+      if (sel) {
+        sel.innerHTML = '<option value="">' + (t['form.field.facility.placeholder'] || 'Enter ZIP to see facilities') + '</option>';
+        sel.disabled = true;
+      }
+    }
+
+    // ---------- Facility picker helpers ----------
+
+    function onZipInput(zip) {
+      var sel     = document.getElementById('facility-select');
+      var preview = document.getElementById('facility-preview');
+      var t       = translations[currentLang];
+
+      preview.hidden = true;
+      sel.disabled   = true;
+
+      if (!/^\d{5}$/.test(zip)) {
+        sel.innerHTML = '<option value="">' + (t['form.field.facility.placeholder'] || 'Enter ZIP to see facilities') + '</option>';
+        return;
+      }
+
+      sel.innerHTML = '<option value="">Loading\u2026</option>';
+
+      FacilitiesLoader.load().then(function () {
+        var facilities = FacilitiesLoader.getByZip(zip);
+        sel.innerHTML  = '';
+        if (facilities.length === 0) {
+          var opt = document.createElement('option');
+          opt.value = '';
+          opt.textContent = 'No facilities found for this ZIP';
+          sel.appendChild(opt);
+        } else {
+          var placeholder = document.createElement('option');
+          placeholder.value = '';
+          placeholder.textContent = 'Select a facility\u2026';
+          sel.appendChild(placeholder);
+          facilities.forEach(function (f) {
+            var o = document.createElement('option');
+            o.value = f.id;
+            o.textContent = f.name;
+            sel.appendChild(o);
+          });
+          sel.disabled = false;
+        }
+      }).catch(function () {
+        sel.innerHTML = '<option value="">Could not load facility list</option>';
+      });
+    }
+
+    function onFacilitySelect(facilityId) {
+      var preview = document.getElementById('facility-preview');
+      if (!facilityId) { preview.hidden = true; return; }
+
+      var facility = FacilitiesLoader.getById(facilityId);
+      if (!facility) { preview.hidden = true; return; }
+
+      var address = facility.street + ', ' + facility.city + ', ' + facility.state + ' ' + facility.zip;
+      var thumb   = (facility.photos && facility.photos[0]) ? facility.photos[0] : '';
+      var link    = 'facility.html?id=' + encodeURIComponent(facilityId);
+
+      // Build preview using DOM methods to prevent XSS
+      preview.innerHTML = '';
+      if (thumb) {
+        var img = document.createElement('img');
+        img.src       = thumb;
+        img.alt       = '';
+        img.className = 'facility-preview-thumb';
+        img.setAttribute('aria-hidden', 'true');
+        preview.appendChild(img);
+      }
+      var info = document.createElement('div');
+      info.className = 'facility-preview-info';
+
+      var nameEl = document.createElement('span');
+      nameEl.className   = 'facility-preview-name';
+      nameEl.textContent = facility.name;
+      info.appendChild(nameEl);
+
+      var addrEl = document.createElement('span');
+      addrEl.className   = 'facility-preview-address';
+      addrEl.textContent = address;
+      info.appendChild(addrEl);
+
+      var linkEl = document.createElement('a');
+      linkEl.href      = link;
+      linkEl.className = 'facility-preview-link';
+      linkEl.target    = '_blank';
+      linkEl.rel       = 'noopener noreferrer';
+      linkEl.textContent = 'View facility page \u2197';
+      info.appendChild(linkEl);
+
+      preview.appendChild(info);
+      preview.hidden = false;
+    }
+
+    // Pre-load facility data as soon as the page is ready
+    if (typeof FacilitiesLoader !== 'undefined') {
+      FacilitiesLoader.load().catch(function () { /* silently ignore on file:// protocol */ });
     }
   </script>
 

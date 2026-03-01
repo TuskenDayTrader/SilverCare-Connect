@@ -63,6 +63,46 @@
 
   <main id="main">
 
+    <!-- ==================== FACILITY-SPECIFIC HERO (shown when ?id= present) ==================== -->
+    <section id="specific-facility-hero" class="hero" aria-labelledby="specific-facility-heading" hidden>
+      <h1 id="specific-facility-heading"></h1>
+      <p id="specific-facility-address" style="font-size:var(--font-lg);opacity:0.92;margin-top:0.25rem;margin-bottom:1.5rem;"></p>
+      <a href="index.html#request" class="btn-primary">Request a Session Here</a>
+    </section>
+
+    <!-- ==================== FACILITY GALLERY (shown when ?id= present) ==================== -->
+    <section id="specific-facility-gallery-section" class="section section--alt" aria-labelledby="gallery-heading" hidden>
+      <div class="container">
+        <p class="section-label" aria-hidden="true">Gallery</p>
+        <h2 id="gallery-heading">Photo Gallery</h2>
+        <div id="specific-facility-gallery" class="facility-gallery" role="list" aria-label="Facility photos"></div>
+      </div>
+    </section>
+
+    <!-- ==================== SOCIAL PROOF (shown when ?id= present) ==================== -->
+    <section id="specific-facility-social-section" class="section" aria-labelledby="social-heading" hidden>
+      <div class="container">
+        <p class="section-label" aria-hidden="true">Community</p>
+        <h2 id="social-heading">Sessions at This Facility</h2>
+        <div id="specific-facility-social" class="facility-social-proof"></div>
+        <p class="mt-3">
+          <a href="index.html#request" class="btn-primary" style="display:inline-block;">Request a Session at This Facility</a>
+        </p>
+        <p class="mt-2">
+          <a
+            href="https://www.batchgeo.com/map/0bab8e4477dc55548d1a79dc440e8ab2"
+            class="map-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View all Pinellas County pilot facilities on BatchGeo map (opens in new tab)"
+          >View Pilot Facility Map ↗</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ==================== GENERIC FACILITY OVERVIEW (hidden when ?id= present) ==================== -->
+    <div id="generic-facility-content">
+
     <!-- ==================== PAGE HERO ==================== -->
     <section class="hero" aria-labelledby="page-heading">
       <h1 id="page-heading">Facility Partner Overview</h1>
@@ -261,6 +301,8 @@
       </div>
     </section>
 
+    </div><!-- /#generic-facility-content -->
+
   </main>
 
   <!-- ==================== FOOTER ==================== -->
@@ -305,6 +347,80 @@
         btn.setAttribute('aria-pressed', btn.getAttribute('data-lang') === lang ? 'true' : 'false');
       });
     }
+  </script>
+
+  <script src="js/facilities.js"></script>
+  <script src="js/demoStore.js"></script>
+  <script>
+    // ---------- Facility-specific micro page logic ----------
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var id = params.get('id');
+      if (!id) return; // No id — show generic content as-is
+
+      FacilitiesLoader.load().then(function () {
+        var facility = FacilitiesLoader.getById(id);
+        if (!facility) return; // Unknown id — fall back to generic content
+
+        // Hide generic overview, show facility-specific sections
+        var generic = document.getElementById('generic-facility-content');
+        if (generic) generic.hidden = true;
+
+        // Update page title and meta description
+        document.title = facility.name + ' — SilverCare Connect';
+        var metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+          metaDesc.setAttribute('content',
+            'Book a family video session at ' + facility.name +
+            ' in ' + facility.city + ', FL. SilverCare Connect handles the tech — you just show up.');
+        }
+
+        // Render facility hero
+        document.getElementById('specific-facility-heading').textContent = facility.name;
+        document.getElementById('specific-facility-address').textContent =
+          facility.street + ', ' + facility.city + ', ' + facility.state + ' ' + facility.zip;
+        document.getElementById('specific-facility-hero').hidden = false;
+
+        // Render photo gallery (only if photos exist)
+        var photos = facility.photos || [];
+        if (photos.length > 0) {
+          var galleryEl = document.getElementById('specific-facility-gallery');
+          galleryEl.innerHTML = '';
+          photos.forEach(function (src, i) {
+            var item = document.createElement('div');
+            item.className = 'facility-gallery-item';
+            item.setAttribute('role', 'listitem');
+            var img = document.createElement('img');
+            img.src = src;
+            img.alt = facility.name + ' \u2014 photo ' + (i + 1);
+            img.loading = 'lazy';
+            item.appendChild(img);
+            galleryEl.appendChild(item);
+          });
+          document.getElementById('specific-facility-gallery-section').hidden = false;
+        }
+
+        // Render social proof
+        var stats = DemoStore.getFacilityStats(id);
+        var count = stats.familiesServedCount;
+        var socialEl = document.getElementById('specific-facility-social');
+        if (count === 0) {
+          socialEl.innerHTML =
+            '<p class="facility-social-first">✨ Your family could be the first to connect here.</p>';
+        } else {
+          socialEl.innerHTML =
+            '<p class="facility-social-count">' +
+              '<strong>' + count + '</strong> ' +
+              (count === 1 ? 'family has' : 'families have') +
+              ' requested a session at this facility.' +
+            '</p>';
+        }
+        document.getElementById('specific-facility-social-section').hidden = false;
+
+      }).catch(function () {
+        // If data fails to load, generic content stays visible
+      });
+    })();
   </script>
 
 </body>
