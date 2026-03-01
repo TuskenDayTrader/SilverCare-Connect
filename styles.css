@@ -478,6 +478,108 @@ body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after 
   color: var(--color-primary);
 }
 
+/* ---------- Facility picker (index.html request form) ---------- */
+.facility-preview-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.facility-preview-thumb {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: calc(var(--radius) / 2);
+  flex-shrink: 0;
+}
+
+.facility-preview-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.facility-preview-name {
+  font-weight: 700;
+  color: var(--color-primary-dk);
+  font-size: var(--font-lg);
+}
+
+.facility-preview-address {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.facility-preview-link {
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-top: 0.25rem;
+  text-decoration: underline;
+}
+.facility-preview-link:hover,
+.facility-preview-link:focus {
+  color: var(--color-primary-dk);
+}
+
+/* ---------- Facility gallery (facility.html) ---------- */
+.facility-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.facility-gallery-item {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--color-surface);
+}
+
+.facility-gallery-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------- Facility social proof (facility.html) ---------- */
+.facility-social-proof {
+  margin: 1.5rem 0 0.5rem;
+}
+
+.facility-social-first {
+  font-size: var(--font-lg);
+  color: var(--color-primary);
+  font-weight: 600;
+  padding: 1rem 1.25rem;
+  background: var(--color-surface);
+  border-left: 4px solid var(--color-primary);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  display: inline-block;
+}
+
+.facility-social-count {
+  font-size: var(--font-lg);
+  color: var(--color-text);
+}
+
+.facility-social-count strong {
+  color: var(--color-primary);
+  font-size: 2rem;
+  line-height: 1;
+  vertical-align: middle;
+  margin-right: 0.25rem;
+}
+
 /* ---------- Utility ---------- */
 .mt-1  { margin-top: 0.5rem; }
 .mt-2  { margin-top: 1rem; }
