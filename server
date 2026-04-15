@@ -1,0 +1,199 @@
+{
+  "name": "silvercare-backend",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mysql2": "^3.3.3",
+    "sequelize": "^6.31.0",
+    "nodemailer": "^6.9.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
+
+
+PORT=4000
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=yourpassword
+DB_NAME=silvercare
+JWT_SECRET=changeme
+EMAIL_HOST=smtp.provider.com
+EMAIL_PORT=587
+EMAIL_USER=your@email.com
+EMAIL_PASS=password
+
+
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { sequelize } from "./db.js";
+import authRoutes from "./routes/auth.js";
+import sessionRoutes from "./routes/sessions.js";
+import { authenticateToken } from "./middleware.js";
+
+dotenv.config();
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+app.get("/", (req, res) => res.send("SilverCare API running"));
+
+app.use("/api/auth", authRoutes);
+app.use("/api/sessions", authenticateToken, sessionRoutes);
+
+const port = process.env.PORT || 4000;
+
+sequelize.sync().then(() => {
+  app.listen(port, () =>
+    console.log(`SilverCare server running on http://localhost:${port}`)
+  );
+});
+
+
+import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
+dotenv.config();
+
+export const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASS,
+  {
+    host: process.env.DB_HOST,
+    dialect: "mysql", // You may change to "sqlite" for local/dev: dialect: "sqlite", storage: "./database.sqlite"
+    logging: false,
+  }
+);
+
+
+
+import { DataTypes } from "sequelize";
+import { sequelize } from "../db.js";
+
+export const User = sequelize.define("User", {
+  name: DataTypes.STRING,
+  email: { type: DataTypes.STRING, unique: true },
+  password: DataTypes.STRING,
+  role: { type: DataTypes.ENUM("family", "facility", "admin"), defaultValue: "family" },
+  seniorName: DataTypes.STRING,
+});
+
+
+import express from "express";
+import bcrypt from "bcrypt";
+import { User } from "../models/User.js";
+import { generateToken } from "../utils/jwt.js";
+const router = express.Router();
+
+// Register
+router.post("/register", async (req, res) => {
+  const { name, email, password, role } = req.body;
+  try {
+    const hash = await bcrypt.hash(password, 10);
+    const user = await User.create({ name, email, password: hash, role });
+    res.json({ token: generateToken(user), user: { id: user.id, name: user.name, role: user.role } });
+  } catch (e) {
+    res.status(400).json({ error: "Email already in use" });
+  }
+});
+
+// Login
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ where: { email } });
+  if (!user || !(await bcrypt.compare(password, user.password)))
+    return res.status(400).json({ error: "Invalid credentials" });
+
+  res.json({ token: generateToken(user), user: { id: user.id, name: user.name, role: user.role } });
+});
+
+export default router;
+
+
+import express from "express";
+import { SessionRequest } from "../models/SessionRequest.js";
+const router = express.Router();
+
+// NEW session request
+router.post("/", async (req, res) => {
+  const { date, time, notes } = req.body;
+  const session = await SessionRequest.create({ date, time, notes, UserId: req.user.id });
+  res.json(session);
+});
+// List my sessions
+router.get("/", async (req, res) => {
+  const sessions = await SessionRequest.findAll({ where: { UserId: req.user.id } });
+  res.json(sessions);
+});
+
+export default router;
+
+
+import jwt from "jsonwebtoken";
+
+export function generateToken(user) {
+  return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "7d" });
+}
+
+
+import jwt from "jsonwebtoken";
+import { User } from "./models/User.js";
+
+export function authenticateToken(req, res, next) {
+  const auth = req.headers["authorization"];
+  const token = auth && auth.split(" ")[1];
+  if (!token) return res.sendStatus(401);
+  jwt.verify(token, process.env.JWT_SECRET, async (err, payload) => {
+    if (err) return res.sendStatus(403);
+    req.user = await User.findByPk(payload.id);
+    next();
+  });
+}
+
+
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+dotenv.config();
+
+export const sendEmail = async (to, subject, html) => {
+  let transporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
+  });
+  return transporter.sendMail({ from: process.env.EMAIL_USER, to, subject, html });
+};
+
+/server
+  app.js
+  db.js
+  .env.example
+  package.json
+  /models
+      User.js
+      SessionRequest.js
+  /routes
+      auth.js
+      sessions.js
+  /utils
+      jwt.js
+      sendEmail.js
+  middleware.js
+
+  
+
+
+
