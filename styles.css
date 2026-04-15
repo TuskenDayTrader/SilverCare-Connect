@@ -592,3 +592,136 @@ body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after 
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+/* ---------- Form groups (session request) ---------- */
+/* Each field is wrapped in .form-group for spacing and error association */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+/* Labels — consistent weight and spacing across all form fields */
+.form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.form-label .optional-tag {
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+/* Text inputs, selects, and textareas share the same base style */
+.form-field {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-family: inherit;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  /* Prevent Safari from rendering selects with system styles */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Visible focus ring for keyboard navigation */
+.form-field:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(26, 94, 138, 0.25);
+}
+
+/* Invalid state — red border */
+.form-field[aria-invalid="true"] {
+  border-color: #c0392b;
+}
+
+.form-field[aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.25);
+}
+
+/* Disabled state (facility select before ZIP is entered) */
+.form-field:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Inline hint text below a field */
+.field-hint {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  margin-top: 0.25rem;
+}
+
+/* Inline validation error message — hidden when empty */
+.field-error {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: #c0392b;
+  font-weight: 600;
+  min-height: 1.2em; /* prevents layout shift when error appears */
+}
+
+.field-error:empty {
+  display: none;
+}
+
+/* ---------- Form error summary ---------- */
+/* Displayed at the top of the form when submit is attempted with errors */
+.form-error-summary {
+  background: #fdf0ef;
+  border: 2px solid #c0392b;
+  border-radius: var(--radius);
+  padding: 0.9rem 1.2rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: #7b1e1e;
+}
+
+.form-error-summary[hidden] {
+  display: none;
+}
+
+.form-error-summary ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.form-error-summary ul li {
+  margin-bottom: 0.25rem;
+}
+
+/* Jump-to-field links inside the error summary */
+.form-error-summary a {
+  color: #7b1e1e;
+  text-decoration: underline;
+}
+
+.form-error-summary a:hover,
+.form-error-summary a:focus {
+  color: #4a1010;
+}
+
+/* ---------- Form success status ---------- */
+/* The #form-status paragraph shown after a successful submission */
+#form-status:not(:empty) {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  background: #eafaf1;
+  border-left: 4px solid #27ae60;
+  color: #1a6e3a;
+}
+
+/* ---------- Facility select loading indicator ---------- */
+/* Applied while facility options are being fetched via XHR */
+.facility-loading-msg {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin-top: 0.25rem;
+  font-style: italic;
+}

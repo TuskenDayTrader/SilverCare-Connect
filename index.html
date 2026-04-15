@@ -208,53 +208,77 @@
           style="max-width:520px;"
         >
 
-          <div style="margin-bottom:1.25rem;">
-            <label for="family-name" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.name">Your Name</label>
+          <!-- Error summary — announced to screen readers when form has validation errors -->
+          <div
+            id="form-error-summary"
+            class="form-error-summary"
+            role="alert"
+            aria-live="assertive"
+            tabindex="-1"
+            hidden
+          ></div>
+
+          <!-- Your Name -->
+          <div class="form-group">
+            <label class="form-label" for="family-name" data-i18n="form.field.name">Your Name</label>
             <input
+              class="form-field"
               type="text"
               id="family-name"
               name="family-name"
               autocomplete="name"
               required
               aria-required="true"
-              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;"
+              aria-describedby="family-name-error"
               data-i18n-placeholder="form.field.name.placeholder"
               placeholder="Full name"
+              onblur="validateField('family-name')"
             />
+            <span class="field-error" id="family-name-error" role="alert"></span>
           </div>
 
-          <div style="margin-bottom:1.25rem;">
-            <label for="contact-email" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.email">Email Address</label>
+          <!-- Email Address -->
+          <div class="form-group">
+            <label class="form-label" for="contact-email" data-i18n="form.field.email">Email Address</label>
             <input
+              class="form-field"
               type="email"
               id="contact-email"
               name="contact-email"
               autocomplete="email"
               required
               aria-required="true"
-              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;"
+              aria-describedby="contact-email-error"
               data-i18n-placeholder="form.field.email.placeholder"
               placeholder="you@example.com"
+              onblur="validateField('contact-email')"
             />
+            <span class="field-error" id="contact-email-error" role="alert"></span>
           </div>
 
-          <div style="margin-bottom:1.25rem;">
-            <label for="resident-name" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.resident">Resident's Name</label>
+          <!-- Resident's Name -->
+          <div class="form-group">
+            <label class="form-label" for="resident-name" data-i18n="form.field.resident">Resident's Name</label>
             <input
+              class="form-field"
               type="text"
               id="resident-name"
               name="resident-name"
               required
               aria-required="true"
-              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;"
+              aria-describedby="resident-name-error"
               data-i18n-placeholder="form.field.resident.placeholder"
               placeholder="Resident's full name"
+              onblur="validateField('resident-name')"
             />
+            <span class="field-error" id="resident-name-error" role="alert"></span>
           </div>
 
-          <div style="margin-bottom:1.25rem;">
-            <label for="facility-zip" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.zip">Facility ZIP Code</label>
+          <!-- Facility ZIP Code -->
+          <div class="form-group">
+            <label class="form-label" for="facility-zip" data-i18n="form.field.zip">Facility ZIP Code</label>
             <input
+              class="form-field"
               type="text"
               id="facility-zip"
               name="facility-zip"
@@ -262,53 +286,69 @@
               pattern="[0-9]{5}"
               maxlength="5"
               autocomplete="postal-code"
-              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;"
               data-i18n-placeholder="form.field.zip.placeholder"
               placeholder="e.g. 33764"
               oninput="onZipInput(this.value)"
-              aria-describedby="zip-hint"
+              onblur="validateField('facility-zip')"
+              aria-describedby="zip-hint facility-zip-error"
             />
-            <span id="zip-hint" style="font-size:0.82rem;color:var(--color-muted);" data-i18n="form.field.zip.hint">Enter ZIP to filter facilities in Pinellas County.</span>
+            <span id="zip-hint" class="field-hint" data-i18n="form.field.zip.hint">Enter ZIP to filter facilities in Pinellas County.</span>
+            <span class="field-error" id="facility-zip-error" role="alert"></span>
           </div>
 
-          <div style="margin-bottom:0.75rem;">
-            <label for="facility-select" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.facility">Select Facility <span style="font-weight:400;color:var(--color-muted);" data-i18n="form.field.facility.optional">(optional)</span></label>
+          <!-- Facility Selector -->
+          <div class="form-group">
+            <label class="form-label" for="facility-select" data-i18n="form.field.facility">
+              Select Facility
+              <span class="optional-tag" data-i18n="form.field.facility.optional">(optional)</span>
+            </label>
             <select
+              class="form-field"
               id="facility-select"
               name="facility-id"
               disabled
-              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;background:var(--color-bg);"
               onchange="onFacilitySelect(this.value)"
               aria-describedby="facility-select-hint"
             >
               <option value="" data-i18n="form.field.facility.placeholder">Enter ZIP to see facilities</option>
             </select>
+            <!-- Loading message shown while fetching facilities -->
+            <span id="facility-loading-msg" class="facility-loading-msg" hidden
+              data-i18n="form.field.facility.loading">Loading facilities…</span>
             <span id="facility-select-hint" class="visually-hidden">Filtered by ZIP code</span>
           </div>
 
           <!-- Facility preview card (shown when a facility is selected) -->
           <div id="facility-preview" class="facility-preview-card" hidden aria-live="polite" aria-label="Selected facility preview"></div>
 
-          <div style="margin-bottom:1.25rem;">
-            <label for="preferred-date" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.date">Preferred Date</label>
+          <!-- Preferred Date -->
+          <div class="form-group">
+            <label class="form-label" for="preferred-date" data-i18n="form.field.date">Preferred Date</label>
             <input
+              class="form-field"
               type="date"
               id="preferred-date"
               name="preferred-date"
               required
               aria-required="true"
-              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;"
+              aria-describedby="preferred-date-hint preferred-date-error"
+              onblur="validateField('preferred-date')"
             />
+            <span id="preferred-date-hint" class="field-hint" data-i18n="form.field.date.hint">Sessions are available Monday – Wednesday only.</span>
+            <span class="field-error" id="preferred-date-error" role="alert"></span>
           </div>
 
-          <div style="margin-bottom:1.25rem;">
-            <label for="preferred-time" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.time">Preferred Time</label>
+          <!-- Preferred Time -->
+          <div class="form-group">
+            <label class="form-label" for="preferred-time" data-i18n="form.field.time">Preferred Time</label>
             <select
+              class="form-field"
               id="preferred-time"
               name="preferred-time"
               required
               aria-required="true"
-              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;background:var(--color-bg);"
+              aria-describedby="preferred-time-error"
+              onblur="validateField('preferred-time')"
             >
               <option value="" disabled selected data-i18n="form.field.time.placeholder">Select a time slot</option>
               <option value="08:00">8:00 AM</option>
@@ -325,15 +365,21 @@
               <option value="19:00">7:00 PM</option>
               <option value="20:00">8:00 PM</option>
             </select>
+            <span class="field-error" id="preferred-time-error" role="alert"></span>
           </div>
 
-          <div style="margin-bottom:1.75rem;">
-            <label for="notes" style="display:block;font-weight:600;margin-bottom:0.3rem;" data-i18n="form.field.notes">Additional Notes <span style="font-weight:400;color:var(--color-muted);">(optional)</span></label>
+          <!-- Additional Notes (optional) -->
+          <div class="form-group" style="margin-bottom:1.75rem;">
+            <label class="form-label" for="notes" data-i18n="form.field.notes">
+              Additional Notes
+              <span class="optional-tag">(optional)</span>
+            </label>
             <textarea
+              class="form-field"
               id="notes"
               name="notes"
               rows="3"
-              style="width:100%;padding:0.6rem 0.8rem;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1rem;resize:vertical;"
+              style="resize:vertical;"
               data-i18n-placeholder="form.field.notes.placeholder"
               placeholder="Anything we should know?"
             ></textarea>
@@ -341,7 +387,7 @@
 
           <button type="submit" class="btn-primary" data-i18n="form.submit">Submit Request</button>
 
-          <p id="form-status" role="status" aria-live="polite" style="margin-top:1rem;font-weight:600;"></p>
+          <p id="form-status" role="status" aria-live="polite"></p>
 
         </form>
       </div>
@@ -425,13 +471,28 @@
         "form.field.facility": "Select Facility",
         "form.field.facility.optional": "(optional)",
         "form.field.facility.placeholder": "Enter ZIP to see facilities",
+        "form.field.facility.loading": "Loading facilities\u2026",
+        "form.field.facility.none": "No facilities found for this ZIP",
+        "form.field.facility.select": "Select a facility\u2026",
+        "form.field.facility.error": "Could not load facility list. Please try again.",
         "form.field.date": "Preferred Date",
+        "form.field.date.hint": "Sessions are available Monday \u2013 Wednesday only.",
         "form.field.time": "Preferred Time",
         "form.field.time.placeholder": "Select a time slot",
         "form.field.notes": "Additional Notes",
         "form.field.notes.placeholder": "Anything we should know?",
         "form.submit": "Submit Request",
         "form.success": "✅ Your request has been submitted! We'll be in touch shortly to confirm your session.",
+        "form.error.summary": "Please correct the following errors:",
+        "form.error.name.required": "Please enter your full name.",
+        "form.error.email.required": "Please enter your email address.",
+        "form.error.email.invalid": "Please enter a valid email address (e.g. you@example.com).",
+        "form.error.resident.required": "Please enter the resident's name.",
+        "form.error.zip.invalid": "Please enter a valid 5-digit ZIP code.",
+        "form.error.date.required": "Please select a preferred date.",
+        "form.error.date.past": "Please select a future date.",
+        "form.error.date.weekday": "Sessions are available Monday through Wednesday only.",
+        "form.error.time.required": "Please select a preferred time.",
         "footer.tagline": "Reducing isolation, one session at a time.",
         "footer.questions": "Questions?",
         "footer.contact": "Contact us",
@@ -493,13 +554,28 @@
         "form.field.facility": "Seleccionar Instalación",
         "form.field.facility.optional": "(opcional)",
         "form.field.facility.placeholder": "Ingrese el código postal para ver instalaciones",
+        "form.field.facility.loading": "Cargando instalaciones\u2026",
+        "form.field.facility.none": "No se encontraron instalaciones para este código postal",
+        "form.field.facility.select": "Seleccionar una instalación\u2026",
+        "form.field.facility.error": "No se pudo cargar la lista de instalaciones. Inténtelo de nuevo.",
         "form.field.date": "Fecha Preferida",
+        "form.field.date.hint": "Las sesiones están disponibles solo de lunes a miércoles.",
         "form.field.time": "Hora Preferida",
         "form.field.time.placeholder": "Seleccionar un horario",
         "form.field.notes": "Notas Adicionales",
         "form.field.notes.placeholder": "¿Algo que debamos saber?",
         "form.submit": "Enviar Solicitud",
         "form.success": "✅ ¡Su solicitud ha sido enviada! Nos pondremos en contacto pronto para confirmar su sesión.",
+        "form.error.summary": "Por favor corrija los siguientes errores:",
+        "form.error.name.required": "Por favor ingrese su nombre completo.",
+        "form.error.email.required": "Por favor ingrese su correo electrónico.",
+        "form.error.email.invalid": "Por favor ingrese una dirección de correo válida (ej. usted@ejemplo.com).",
+        "form.error.resident.required": "Por favor ingrese el nombre del residente.",
+        "form.error.zip.invalid": "Por favor ingrese un código postal de 5 dígitos.",
+        "form.error.date.required": "Por favor seleccione una fecha preferida.",
+        "form.error.date.past": "Por favor seleccione una fecha futura.",
+        "form.error.date.weekday": "Las sesiones están disponibles solo de lunes a miércoles.",
+        "form.error.time.required": "Por favor seleccione una hora preferida.",
         "footer.tagline": "Reduciendo el aislamiento, una sesión a la vez.",
         "footer.questions": "¿Preguntas?",
         "footer.contact": "Contáctenos",
@@ -561,13 +637,28 @@
         "form.field.facility": "选择机构",
         "form.field.facility.optional": "（可选）",
         "form.field.facility.placeholder": "输入邮政编码查看机构",
+        "form.field.facility.loading": "正在加载机构…",
+        "form.field.facility.none": "该邮政编码未找到机构",
+        "form.field.facility.select": "请选择一个机构…",
+        "form.field.facility.error": "无法加载机构列表，请重试。",
         "form.field.date": "首选日期",
+        "form.field.date.hint": "会话仅限周一至周三。",
         "form.field.time": "首选时间",
         "form.field.time.placeholder": "选择时间段",
         "form.field.notes": "其他说明",
         "form.field.notes.placeholder": "有什么需要我们了解的吗？",
         "form.submit": "提交申请",
         "form.success": "✅ 您的申请已提交！我们将尽快与您联系以确认您的会话。",
+        "form.error.summary": "请更正以下错误：",
+        "form.error.name.required": "请输入您的全名。",
+        "form.error.email.required": "请输入您的电子邮件地址。",
+        "form.error.email.invalid": "请输入有效的电子邮件地址。",
+        "form.error.resident.required": "请输入居民姓名。",
+        "form.error.zip.invalid": "请输入有效的5位邮政编码。",
+        "form.error.date.required": "请选择首选日期。",
+        "form.error.date.past": "请选择未来的日期。",
+        "form.error.date.weekday": "会话仅限周一至周三。",
+        "form.error.time.required": "请选择首选时间。",
         "footer.tagline": "减少孤独，一次会话，一次连接。",
         "footer.questions": "有疑问？",
         "footer.contact": "联系我们",
@@ -579,28 +670,60 @@
     let currentLang = 'en';
     let baseFontSize = 16;
 
+    // ---------- Language switching ----------
+
     function setLang(lang) {
       currentLang = lang;
       document.documentElement.lang = lang;
-      const t = translations[lang];
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (t[key]) el.textContent = t[key];
+      var t = translations[lang];
+
+      // Apply text content to all elements with data-i18n.
+      // If an element has child elements (e.g. a label with a nested <span class="optional-tag">),
+      // only the leading text node is updated so nested markup is preserved.
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n');
+        if (t[key] === undefined) return;
+        if (el.childElementCount === 0) {
+          // No child elements — safe to overwrite textContent directly
+          el.textContent = t[key];
+        } else {
+          // Has child elements — update only the first non-empty text node
+          // to avoid destroying nested markup (e.g. optional-tag spans)
+          for (var i = 0; i < el.childNodes.length; i++) {
+            var node = el.childNodes[i];
+            if (node.nodeType === 3 /* TEXT_NODE */ && node.textContent.trim()) {
+              node.textContent = t[key] + ' ';
+              break;
+            }
+          }
+        }
       });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (t[key]) el.placeholder = t[key];
+
+      // Apply placeholder translations
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n-placeholder');
+        if (t[key] !== undefined) el.placeholder = t[key];
       });
-      // Update the default time-slot option text
-      const timeDefault = document.querySelector('#preferred-time option[value=""]');
+
+      // Update the disabled first time-slot option text
+      var timeDefault = document.querySelector('#preferred-time option[value=""]');
       if (timeDefault && t['form.field.time.placeholder']) {
         timeDefault.textContent = t['form.field.time.placeholder'];
       }
+
       // Update aria-pressed on language buttons
-      document.querySelectorAll('.lang-switcher button').forEach(btn => {
+      document.querySelectorAll('.lang-switcher button').forEach(function (btn) {
         btn.setAttribute('aria-pressed', btn.getAttribute('data-lang') === lang ? 'true' : 'false');
       });
+
+      // Re-render facility select placeholder text if select is still in the default state
+      var sel = document.getElementById('facility-select');
+      if (sel && sel.disabled && sel.options.length === 1) {
+        sel.options[0].textContent = t['form.field.facility.placeholder'] || 'Enter ZIP to see facilities';
+      }
     }
+
+    // ---------- Accessibility controls ----------
 
     function adjustFontSize(delta) {
       if (delta === 0) { baseFontSize = 16; }
@@ -609,46 +732,213 @@
     }
 
     function toggleContrast() {
-      const btn = document.getElementById('contrast-toggle');
-      const active = document.body.classList.toggle('high-contrast');
+      var btn = document.getElementById('contrast-toggle');
+      var active = document.body.classList.toggle('high-contrast');
       btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     }
 
     function toggleMotion() {
-      const btn = document.getElementById('motion-toggle');
-      const active = document.body.classList.toggle('reduce-motion');
+      var btn = document.getElementById('motion-toggle');
+      var active = document.body.classList.toggle('reduce-motion');
       btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     }
+
+    // ---------- Form validation ----------
+
+    /**
+     * Validate all required form fields.
+     * Returns an object mapping field ID → localized error string.
+     * An empty object means the form is valid.
+     */
+    function validateForm() {
+      var t = translations[currentLang];
+      var errors = {};
+
+      // Your Name — required, non-empty
+      var nameVal = document.getElementById('family-name').value.trim();
+      if (!nameVal) {
+        errors['family-name'] = t['form.error.name.required'];
+      }
+
+      // Email — required, basic format check
+      var emailVal = document.getElementById('contact-email').value.trim();
+      if (!emailVal) {
+        errors['contact-email'] = t['form.error.email.required'];
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailVal)) {
+        errors['contact-email'] = t['form.error.email.invalid'];
+      }
+
+      // Resident's Name — required
+      var residentVal = document.getElementById('resident-name').value.trim();
+      if (!residentVal) {
+        errors['resident-name'] = t['form.error.resident.required'];
+      }
+
+      // ZIP — optional, but if provided must be exactly 5 digits
+      var zipVal = document.getElementById('facility-zip').value.trim();
+      if (zipVal && !/^\d{5}$/.test(zipVal)) {
+        errors['facility-zip'] = t['form.error.zip.invalid'];
+      }
+
+      // Preferred Date — required, future, Mon–Wed only
+      var dateVal = document.getElementById('preferred-date').value;
+      if (!dateVal) {
+        errors['preferred-date'] = t['form.error.date.required'];
+      } else {
+        // Parse as local date (append T00:00:00 to avoid UTC offset issues)
+        var date = new Date(dateVal + 'T00:00:00');
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (date < today) {
+          errors['preferred-date'] = t['form.error.date.past'];
+        } else {
+          // getDay(): 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+          var day = date.getDay();
+          if (day < 1 || day > 3) {
+            errors['preferred-date'] = t['form.error.date.weekday'];
+          }
+        }
+      }
+
+      // Preferred Time — required
+      var timeVal = document.getElementById('preferred-time').value;
+      if (!timeVal) {
+        errors['preferred-time'] = t['form.error.time.required'];
+      }
+
+      return errors;
+    }
+
+    /**
+     * Display inline errors and the error summary.
+     * Returns true if no errors, false if there were errors.
+     */
+    function applyValidationErrors(errors) {
+      var t = translations[currentLang];
+
+      // Clear all previous error states
+      document.querySelectorAll('.field-error').forEach(function (el) {
+        el.textContent = '';
+      });
+      document.querySelectorAll('.form-field[aria-invalid]').forEach(function (el) {
+        el.removeAttribute('aria-invalid');
+      });
+
+      var summary = document.getElementById('form-error-summary');
+      var errorIds = Object.keys(errors);
+
+      if (errorIds.length === 0) {
+        if (summary) summary.hidden = true;
+        return true;
+      }
+
+      // Show per-field inline errors and mark fields invalid
+      errorIds.forEach(function (fieldId) {
+        var field = document.getElementById(fieldId);
+        var errorEl = document.getElementById(fieldId + '-error');
+        if (field) field.setAttribute('aria-invalid', 'true');
+        if (errorEl) errorEl.textContent = errors[fieldId];
+      });
+
+      // Build and show the accessible error summary
+      if (summary) {
+        var html = '<strong>' + t['form.error.summary'] + '</strong><ul>';
+        errorIds.forEach(function (fieldId) {
+          var labelEl = document.querySelector('label[for="' + fieldId + '"]');
+          // Read only the label's own text node to exclude "(optional)" child spans
+          var labelText = fieldId;
+          if (labelEl) {
+            for (var i = 0; i < labelEl.childNodes.length; i++) {
+              var n = labelEl.childNodes[i];
+              if (n.nodeType === 3 /* TEXT_NODE */ && n.textContent.trim()) {
+                labelText = n.textContent.trim();
+                break;
+              }
+            }
+          }
+          html += '<li><a href="#' + fieldId + '">' + labelText + ': ' + errors[fieldId] + '</a></li>';
+        });
+        html += '</ul>';
+        summary.innerHTML = html;
+        summary.hidden = false;
+        // Move keyboard focus to summary so screen readers announce it
+        summary.focus();
+      }
+
+      return false;
+    }
+
+    /**
+     * Validate a single field on blur and show/clear its inline error.
+     * Called by onblur handlers on individual inputs.
+     */
+    function validateField(fieldId) {
+      var errors = validateForm();
+      var errorEl = document.getElementById(fieldId + '-error');
+      var field   = document.getElementById(fieldId);
+
+      if (errors[fieldId]) {
+        if (field)   field.setAttribute('aria-invalid', 'true');
+        if (errorEl) errorEl.textContent = errors[fieldId];
+      } else {
+        if (field)   field.removeAttribute('aria-invalid');
+        if (errorEl) errorEl.textContent = '';
+      }
+    }
+
+    // ---------- Form submit ----------
 
     // Base URL for the backend API. Change this to your deployed URL in production.
     var API_BASE = 'http://localhost:4000';
 
     function handleFormSubmit(e) {
       e.preventDefault();
-      var form = e.target;
-      var status = document.getElementById('form-status');
-      var t = translations[currentLang];
+      var form      = e.target;
+      var status    = document.getElementById('form-status');
+      var t         = translations[currentLang];
       var submitBtn = form.querySelector('[type="submit"]');
+
+      // Clear any previous success message
+      status.textContent = '';
+
+      // Run client-side validation; stop immediately if there are errors
+      var errors = validateForm();
+      if (!applyValidationErrors(errors)) return;
 
       var facilityId = document.getElementById('facility-select').value;
       var payload = {
-        familyName:   form['family-name'].value,
-        contactEmail: form['contact-email'].value,
-        residentName: form['resident-name'].value,
+        familyName:   form['family-name'].value.trim(),
+        contactEmail: form['contact-email'].value.trim(),
+        residentName: form['resident-name'].value.trim(),
         facilityId:   facilityId || null,
         date:         form['preferred-date'].value,
         time:         form['preferred-time'].value,
-        notes:        form['notes'].value
+        notes:        form['notes'].value.trim()
       };
 
-      // Also persist locally via DemoStore for facility stats display
-      if (typeof DemoStore !== 'undefined' && facilityId) {
+      // Persist locally via DemoStore for facility stats display
+      if (typeof DemoStore !== 'undefined') {
         DemoStore.saveSessionRequest(payload);
-        DemoStore.incrementFacilityRequest(facilityId);
+        if (facilityId) {
+          DemoStore.incrementFacilityRequest(facilityId);
+        }
       }
 
-      status.textContent = '';
       if (submitBtn) submitBtn.disabled = true;
+
+      // Helper to reset form UI after a successful or demo-mode submission
+      function resetFormUI() {
+        form.reset();
+        var preview = document.getElementById('facility-preview');
+        if (preview) preview.hidden = true;
+        var sel = document.getElementById('facility-select');
+        if (sel) {
+          sel.innerHTML = '<option value="">' + (t['form.field.facility.placeholder'] || 'Enter ZIP to see facilities') + '</option>';
+          sel.disabled  = true;
+        }
+        // Scroll success message into view for sighted users
+        status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
 
       fetch(API_BASE + '/api/sessions/public', {
         method: 'POST',
@@ -660,28 +950,14 @@
           return res.json();
         })
         .then(function () {
-          status.textContent = t['form.success'] || '✅ Your request has been submitted! We\'ll be in touch shortly to confirm your session.';
-          form.reset();
-          var preview = document.getElementById('facility-preview');
-          if (preview) preview.hidden = true;
-          var sel = document.getElementById('facility-select');
-          if (sel) {
-            sel.innerHTML = '<option value="">' + (t['form.field.facility.placeholder'] || 'Enter ZIP to see facilities') + '</option>';
-            sel.disabled = true;
-          }
+          status.textContent = t['form.success'];
+          resetFormUI();
         })
         .catch(function (err) {
           // Fall back to demo-only success message if the server is not running
           console.warn('API unavailable, using demo mode:', err.message);
-          status.textContent = t['form.success'] || '✅ Your request has been submitted! We\'ll be in touch shortly to confirm your session.';
-          form.reset();
-          var preview = document.getElementById('facility-preview');
-          if (preview) preview.hidden = true;
-          var sel = document.getElementById('facility-select');
-          if (sel) {
-            sel.innerHTML = '<option value="">' + (t['form.field.facility.placeholder'] || 'Enter ZIP to see facilities') + '</option>';
-            sel.disabled = true;
-          }
+          status.textContent = t['form.success'];
+          resetFormUI();
         })
         .finally(function () {
           if (submitBtn) submitBtn.disabled = false;
@@ -690,47 +966,71 @@
 
     // ---------- Facility picker helpers ----------
 
+    /**
+     * Called every time the ZIP field changes.
+     * Filters the facility dropdown to the entered ZIP code.
+     */
     function onZipInput(zip) {
-      var sel     = document.getElementById('facility-select');
-      var preview = document.getElementById('facility-preview');
-      var t       = translations[currentLang];
+      var sel        = document.getElementById('facility-select');
+      var preview    = document.getElementById('facility-preview');
+      var loadingMsg = document.getElementById('facility-loading-msg');
+      var t          = translations[currentLang];
 
+      // Always hide the preview when the ZIP changes
       preview.hidden = true;
-      sel.disabled   = true;
 
+      // Reset to placeholder when ZIP is incomplete or cleared
       if (!/^\d{5}$/.test(zip)) {
         sel.innerHTML = '<option value="">' + (t['form.field.facility.placeholder'] || 'Enter ZIP to see facilities') + '</option>';
+        sel.disabled  = true;
+        if (loadingMsg) loadingMsg.hidden = true;
         return;
       }
 
-      sel.innerHTML = '<option value="">Loading\u2026</option>';
+      // Show loading state
+      sel.innerHTML = '<option value="">' + (t['form.field.facility.loading'] || 'Loading\u2026') + '</option>';
+      sel.disabled  = true;
+      if (loadingMsg) loadingMsg.hidden = false;
 
       FacilitiesLoader.load().then(function () {
+        if (loadingMsg) loadingMsg.hidden = true;
         var facilities = FacilitiesLoader.getByZip(zip);
         sel.innerHTML  = '';
+
         if (facilities.length === 0) {
+          // Inform the user no facilities were found for this ZIP
           var opt = document.createElement('option');
-          opt.value = '';
-          opt.textContent = 'No facilities found for this ZIP';
+          opt.value       = '';
+          opt.textContent = t['form.field.facility.none'] || 'No facilities found for this ZIP';
           sel.appendChild(opt);
+          sel.disabled = true;
         } else {
+          // Add a blank prompt option followed by matching facilities
           var placeholder = document.createElement('option');
-          placeholder.value = '';
-          placeholder.textContent = 'Select a facility\u2026';
+          placeholder.value       = '';
+          placeholder.textContent = t['form.field.facility.select'] || 'Select a facility\u2026';
           sel.appendChild(placeholder);
+
           facilities.forEach(function (f) {
             var o = document.createElement('option');
             o.value = f.id;
-            o.textContent = f.name;
+            // Show facility name and city — comma separator reads clearly with screen readers
+            o.textContent = f.name + ', ' + f.city;
             sel.appendChild(o);
           });
           sel.disabled = false;
         }
       }).catch(function () {
-        sel.innerHTML = '<option value="">Could not load facility list</option>';
+        if (loadingMsg) loadingMsg.hidden = true;
+        sel.innerHTML = '<option value="">' + (t['form.field.facility.error'] || 'Could not load facility list') + '</option>';
+        sel.disabled  = true;
       });
     }
 
+    /**
+     * Called when the facility dropdown selection changes.
+     * Renders a preview card with the facility name, address, and a link.
+     */
     function onFacilitySelect(facilityId) {
       var preview = document.getElementById('facility-preview');
       if (!facilityId) { preview.hidden = true; return; }
@@ -742,16 +1042,18 @@
       var thumb   = (facility.photos && facility.photos[0]) ? facility.photos[0] : '';
       var link    = 'facility.html?id=' + encodeURIComponent(facilityId);
 
-      // Build preview using DOM methods to prevent XSS
+      // Build preview card using DOM methods to prevent XSS
       preview.innerHTML = '';
+
       if (thumb) {
         var img = document.createElement('img');
         img.src       = thumb;
-        img.alt       = '';
+        img.alt       = '';           // decorative — facility name is in the text below
         img.className = 'facility-preview-thumb';
         img.setAttribute('aria-hidden', 'true');
         preview.appendChild(img);
       }
+
       var info = document.createElement('div');
       info.className = 'facility-preview-info';
 
@@ -770,6 +1072,8 @@
       linkEl.className = 'facility-preview-link';
       linkEl.target    = '_blank';
       linkEl.rel       = 'noopener noreferrer';
+      // Descriptive link text including facility name for screen readers
+      linkEl.setAttribute('aria-label', 'View ' + facility.name + ' facility page (opens in new tab)');
       linkEl.textContent = 'View facility page \u2197';
       info.appendChild(linkEl);
 
@@ -777,7 +1081,7 @@
       preview.hidden = false;
     }
 
-    // Pre-load facility data as soon as the page is ready
+    // Pre-load facility data in the background so ZIP lookups are instant
     if (typeof FacilitiesLoader !== 'undefined') {
       FacilitiesLoader.load().catch(function () { /* silently ignore on file:// protocol */ });
     }
