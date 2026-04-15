@@ -105,14 +105,46 @@ npx serve .
 http://localhost:8080/facility.html?id=sandpiper-alf-saint-petersburg-33707
 ```
 
+## Testing the Session Request Flow
+
+After starting a local server, walk through the following manual test steps:
+
+1. **Open** `http://localhost:8080` in a browser.
+2. **Click** "Request a Session" in the navigation or hero — confirm the page scrolls to the form.
+3. **Submit the empty form** — all required fields should show inline error messages and the error summary should appear at the top of the form.
+4. **Enter an invalid email** (e.g. `notanemail`) — confirm the per-field error updates on blur.
+5. **Enter a valid ZIP code** (e.g. `33707`) — confirm the facility dropdown populates with matching facilities.
+6. **Select a facility** — confirm the preview card appears with the facility name, address, and a link to its page.
+7. **Pick a non-Mon/Wed date** (e.g. a Thursday) — confirm the date field shows an error on submission.
+8. **Fill all fields correctly with a Monday–Wednesday date** — confirm the form submits, the success message appears, and the form resets.
+9. **Test language switching** — switch to Español and 中文 and verify all form labels, placeholders, and error messages appear in the selected language.
+10. **Inspect localStorage** (DevTools → Application → Local Storage) and verify a new entry was saved under key `sc_session_requests`.
+
+### Modifying the Session Request Form
+
+- **Adding a new field**: Add the HTML input inside a `<div class="form-group">` in `index.html`, then add validation logic for the new field inside `validateForm()` in the same file's `<script>` block. Add i18n keys for all three languages (`en`, `es`, `zh`).
+- **Changing available time slots**: Edit the `<option>` elements inside `#preferred-time` in `index.html`.
+- **Changing pilot days**: Update the `validateForm()` date check (currently enforces day 1–3, Mon–Wed) and update the `form.field.date.hint` translation strings.
+
 ## Accessibility
 
 - Multi-language support: English, Español, 中文
 - Adjustable font sizes (A− / A / A+)
 - High contrast mode toggle
 - Reduced motion toggle
-- Screen reader friendly (ARIA labels, landmarks, skip-to-content link)
-- Keyboard navigable
+- Screen reader friendly (ARIA labels, landmarks, skip-to-content link, `aria-live` regions)
+- Keyboard navigable — visible focus rings on all interactive elements
+- Per-field inline error messages linked via `aria-describedby`
+- Form error summary with focus management on failed submission
+
+## Contributor Tips
+
+- **No build step** — all JavaScript is vanilla ES5/ES6 served directly. Open the HTML files (via a local server) and refresh.
+- **CSS custom properties** — all colours, spacing, and radii are defined as CSS variables in `:root {}` inside `styles.css`. Change them once to update the whole site.
+- **i18n** — all user-visible strings in `index.html` are stored in the `translations` object near the bottom of the file. To add a new language, copy the `en` block, change the language code, and translate the values. For `facility.html`, strings live in `facilityTranslations` inside that page's `<script>` block.
+- **Facility data** — modify `data/facilities.pinellas.json` to add, rename, or remove facilities. The `id` field is the stable slug used in `?id=` URLs — **do not change existing IDs** after links have been shared.
+- **Demo store** — `js/demoStore.js` persists session requests in `localStorage`. To inspect or clear demo data, use DevTools → Application → Local Storage and look for keys `sc_session_requests` and `sc_facility_stats`.
+- **High-contrast & reduced-motion** — both are supported via CSS classes (`body.high-contrast`, `body.reduce-motion`) toggled by the accessibility bar, *and* by native OS/browser media queries (`prefers-contrast: more`, `prefers-reduced-motion: reduce`).
 
 ## Pilot
 
