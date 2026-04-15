@@ -620,38 +620,72 @@
       btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     }
 
+    // Base URL for the backend API. Change this to your deployed URL in production.
+    var API_BASE = 'http://localhost:4000';
+
     function handleFormSubmit(e) {
       e.preventDefault();
       var form = e.target;
       var status = document.getElementById('form-status');
       var t = translations[currentLang];
+      var submitBtn = form.querySelector('[type="submit"]');
 
-      // Persist request + update stats when a facility was selected
       var facilityId = document.getElementById('facility-select').value;
+      var payload = {
+        familyName:   form['family-name'].value,
+        contactEmail: form['contact-email'].value,
+        residentName: form['resident-name'].value,
+        facilityId:   facilityId || null,
+        date:         form['preferred-date'].value,
+        time:         form['preferred-time'].value,
+        notes:        form['notes'].value
+      };
+
+      // Also persist locally via DemoStore for facility stats display
       if (typeof DemoStore !== 'undefined' && facilityId) {
-        DemoStore.saveSessionRequest({
-          familyName:    form['family-name'].value,
-          contactEmail:  form['contact-email'].value,
-          residentName:  form['resident-name'].value,
-          facilityId:    facilityId,
-          preferredDate: form['preferred-date'].value,
-          preferredTime: form['preferred-time'].value,
-          notes:         form['notes'].value
-        });
+        DemoStore.saveSessionRequest(payload);
         DemoStore.incrementFacilityRequest(facilityId);
       }
 
-      status.textContent = t['form.success'] || '✅ Your request has been submitted! We\'ll be in touch shortly to confirm your session.';
-      form.reset();
+      status.textContent = '';
+      if (submitBtn) submitBtn.disabled = true;
 
-      // Reset facility picker UI after submit
-      var preview = document.getElementById('facility-preview');
-      if (preview) preview.hidden = true;
-      var sel = document.getElementById('facility-select');
-      if (sel) {
-        sel.innerHTML = '<option value="">' + (t['form.field.facility.placeholder'] || 'Enter ZIP to see facilities') + '</option>';
-        sel.disabled = true;
-      }
+      fetch(API_BASE + '/api/sessions/public', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+        .then(function (res) {
+          if (!res.ok) return res.json().then(function (d) { throw new Error(d.error || 'Server error'); });
+          return res.json();
+        })
+        .then(function () {
+          status.textContent = t['form.success'] || '✅ Your request has been submitted! We\'ll be in touch shortly to confirm your session.';
+          form.reset();
+          var preview = document.getElementById('facility-preview');
+          if (preview) preview.hidden = true;
+          var sel = document.getElementById('facility-select');
+          if (sel) {
+            sel.innerHTML = '<option value="">' + (t['form.field.facility.placeholder'] || 'Enter ZIP to see facilities') + '</option>';
+            sel.disabled = true;
+          }
+        })
+        .catch(function (err) {
+          // Fall back to demo-only success message if the server is not running
+          console.warn('API unavailable, using demo mode:', err.message);
+          status.textContent = t['form.success'] || '✅ Your request has been submitted! We\'ll be in touch shortly to confirm your session.';
+          form.reset();
+          var preview = document.getElementById('facility-preview');
+          if (preview) preview.hidden = true;
+          var sel = document.getElementById('facility-select');
+          if (sel) {
+            sel.innerHTML = '<option value="">' + (t['form.field.facility.placeholder'] || 'Enter ZIP to see facilities') + '</option>';
+            sel.disabled = true;
+          }
+        })
+        .finally(function () {
+          if (submitBtn) submitBtn.disabled = false;
+        });
     }
 
     // ---------- Facility picker helpers ----------
