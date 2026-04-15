@@ -888,51 +888,80 @@
 
     // ---------- Form submit ----------
 
+    // Base URL for the backend API. Change this to your deployed URL in production.
+    var API_BASE = 'http://localhost:4000';
+
     function handleFormSubmit(e) {
       e.preventDefault();
-      var form   = e.target;
-      var status = document.getElementById('form-status');
-      var t      = translations[currentLang];
+      var form      = e.target;
+      var status    = document.getElementById('form-status');
+      var t         = translations[currentLang];
+      var submitBtn = form.querySelector('[type="submit"]');
 
       // Clear any previous success message
       status.textContent = '';
 
-      // Run validation; stop if there are errors
+      // Run client-side validation; stop immediately if there are errors
       var errors = validateForm();
       if (!applyValidationErrors(errors)) return;
 
-      // Persist request and update facility stats (demo store, localStorage-backed)
       var facilityId = document.getElementById('facility-select').value;
+      var payload = {
+        familyName:   form['family-name'].value.trim(),
+        contactEmail: form['contact-email'].value.trim(),
+        residentName: form['resident-name'].value.trim(),
+        facilityId:   facilityId || null,
+        date:         form['preferred-date'].value,
+        time:         form['preferred-time'].value,
+        notes:        form['notes'].value.trim()
+      };
+
+      // Persist locally via DemoStore for facility stats display
       if (typeof DemoStore !== 'undefined') {
-        DemoStore.saveSessionRequest({
-          familyName:    form['family-name'].value.trim(),
-          contactEmail:  form['contact-email'].value.trim(),
-          residentName:  form['resident-name'].value.trim(),
-          facilityId:    facilityId || null,
-          preferredDate: form['preferred-date'].value,
-          preferredTime: form['preferred-time'].value,
-          notes:         form['notes'].value.trim()
-        });
+        DemoStore.saveSessionRequest(payload);
         if (facilityId) {
           DemoStore.incrementFacilityRequest(facilityId);
         }
       }
 
-      // Show success message
-      status.textContent = t['form.success'];
-      form.reset();
+      if (submitBtn) submitBtn.disabled = true;
 
-      // Reset facility picker UI after submit
-      var preview = document.getElementById('facility-preview');
-      if (preview) preview.hidden = true;
-      var sel = document.getElementById('facility-select');
-      if (sel) {
-        sel.innerHTML = '<option value="">' + (t['form.field.facility.placeholder'] || 'Enter ZIP to see facilities') + '</option>';
-        sel.disabled  = true;
+      // Helper to reset form UI after a successful or demo-mode submission
+      function resetFormUI() {
+        form.reset();
+        var preview = document.getElementById('facility-preview');
+        if (preview) preview.hidden = true;
+        var sel = document.getElementById('facility-select');
+        if (sel) {
+          sel.innerHTML = '<option value="">' + (t['form.field.facility.placeholder'] || 'Enter ZIP to see facilities') + '</option>';
+          sel.disabled  = true;
+        }
+        // Scroll success message into view for sighted users
+        status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
 
-      // Scroll success message into view for sighted users
-      status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      fetch(API_BASE + '/api/sessions/public', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+        .then(function (res) {
+          if (!res.ok) return res.json().then(function (d) { throw new Error(d.error || 'Server error'); });
+          return res.json();
+        })
+        .then(function () {
+          status.textContent = t['form.success'];
+          resetFormUI();
+        })
+        .catch(function (err) {
+          // Fall back to demo-only success message if the server is not running
+          console.warn('API unavailable, using demo mode:', err.message);
+          status.textContent = t['form.success'];
+          resetFormUI();
+        })
+        .finally(function () {
+          if (submitBtn) submitBtn.disabled = false;
+        });
     }
 
     // ---------- Facility picker helpers ----------

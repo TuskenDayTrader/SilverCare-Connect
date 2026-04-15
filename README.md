@@ -158,4 +158,115 @@ After starting a local server, walk through the following manual test steps:
 
 ---
 
+## Backend (Node.js / Express)
+
+The `/server` directory contains a full Express + Sequelize REST API for user accounts and session requests.
+
+### Directory structure
+
+```
+server/
+  app.js               ← Express entry point
+  db.js                ← Sequelize / MySQL (or SQLite) connection
+  middleware.js        ← JWT auth middleware
+  package.json
+  .env.example
+  models/
+    User.js
+    SessionRequest.js
+  routes/
+    auth.js            ← /api/auth/register  /api/auth/login
+    sessions.js        ← /api/sessions/public  /api/sessions
+  utils/
+    jwt.js
+    sendEmail.js
+```
+
+### 1 — Configure environment variables
+
+```bash
+cd server
+cp .env.example .env
+```
+
+Open `.env` and set:
+
+| Variable | Description |
+|----------|-------------|
+| `PORT` | Port the API listens on (default `4000`) |
+| `DB_HOST` | MySQL host (e.g. `localhost`) |
+| `DB_USER` | MySQL username |
+| `DB_PASS` | MySQL password |
+| `DB_NAME` | MySQL database name (create it first: `CREATE DATABASE silvercare;`) |
+| `JWT_SECRET` | A long random string — keep this secret |
+| `EMAIL_HOST/PORT/USER/PASS` | SMTP credentials for outgoing email |
+
+**SQLite (easiest for local dev — no MySQL needed):**  
+Edit `server/db.js` and replace the `dialect: "mysql"` block with:
+
+```js
+dialect: "sqlite",
+storage: "./database.sqlite",
+```
+
+Then remove `DB_HOST`, `DB_USER`, `DB_PASS`, `DB_NAME` from `.env`.
+
+### 2 — Install dependencies and start the server
+
+```bash
+cd server
+npm install
+npm run dev    # uses nodemon — auto-restarts on file changes
+# or: npm start
+```
+
+The API will be available at **http://localhost:4000**.
+
+### 3 — Endpoints
+
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| `POST` | `/api/auth/register` | None | Register a new user |
+| `POST` | `/api/auth/login` | None | Login, receive JWT token |
+| `POST` | `/api/sessions/public` | None | Submit a session request (used by the homepage form) |
+| `POST` | `/api/sessions` | Bearer JWT | Create a session linked to your account |
+| `GET`  | `/api/sessions` | Bearer JWT | List your session requests |
+
+### Example requests
+
+**Register:**
+```bash
+curl -X POST http://localhost:4000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Jane Smith","email":"jane@example.com","password":"secret123"}'
+```
+
+**Public session request (same as homepage form):**
+```bash
+curl -X POST http://localhost:4000/api/sessions/public \
+  -H "Content-Type: application/json" \
+  -d '{
+    "familyName": "Jane Smith",
+    "contactEmail": "jane@example.com",
+    "residentName": "Margaret Smith",
+    "facilityId": "sandpiper-alf-saint-petersburg-33707",
+    "date": "2026-05-12",
+    "time": "10:00",
+    "notes": "Grandma loves mornings"
+  }'
+```
+
+### Frontend integration
+
+`index.html` automatically POSTs the session-request form to `http://localhost:4000/api/sessions/public`.  
+If the backend is not running the form falls back to demo mode (localStorage only).
+
+To point the frontend at a deployed backend, change the `API_BASE` variable at the top of the `<script>` block in `index.html`:
+
+```js
+var API_BASE = 'https://your-deployed-api.example.com';
+```
+
+---
+
 *SilverCare Connect — Reducing isolation, one session at a time.*
