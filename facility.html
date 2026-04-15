@@ -384,10 +384,22 @@
       var t = facilityTranslations[lang] || facilityTranslations['en'];
       document.documentElement.lang = lang;
 
-      // Translate all elements marked with data-i18n
+      // Translate all elements marked with data-i18n.
+      // If an element has child elements, update only the leading text node to preserve nested markup.
       document.querySelectorAll('[data-i18n]').forEach(function (el) {
         var key = el.getAttribute('data-i18n');
-        if (t[key] !== undefined) el.textContent = t[key];
+        if (t[key] === undefined) return;
+        if (el.childElementCount === 0) {
+          el.textContent = t[key];
+        } else {
+          for (var i = 0; i < el.childNodes.length; i++) {
+            var node = el.childNodes[i];
+            if (node.nodeType === 3 /* TEXT_NODE */ && node.textContent.trim()) {
+              node.textContent = t[key] + ' ';
+              break;
+            }
+          }
+        }
       });
 
       // Update aria-pressed state on language buttons

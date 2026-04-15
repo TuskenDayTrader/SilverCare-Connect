@@ -677,10 +677,26 @@
       document.documentElement.lang = lang;
       var t = translations[lang];
 
-      // Apply text content to all elements with data-i18n
+      // Apply text content to all elements with data-i18n.
+      // If an element has child elements (e.g. a label with a nested <span class="optional-tag">),
+      // only the leading text node is updated so nested markup is preserved.
       document.querySelectorAll('[data-i18n]').forEach(function (el) {
         var key = el.getAttribute('data-i18n');
-        if (t[key] !== undefined) el.textContent = t[key];
+        if (t[key] === undefined) return;
+        if (el.childElementCount === 0) {
+          // No child elements — safe to overwrite textContent directly
+          el.textContent = t[key];
+        } else {
+          // Has child elements — update only the first non-empty text node
+          // to avoid destroying nested markup (e.g. optional-tag spans)
+          for (var i = 0; i < el.childNodes.length; i++) {
+            var node = el.childNodes[i];
+            if (node.nodeType === 3 /* TEXT_NODE */ && node.textContent.trim()) {
+              node.textContent = t[key] + ' ';
+              break;
+            }
+          }
+        }
       });
 
       // Apply placeholder translations
@@ -826,10 +842,20 @@
 
       // Build and show the accessible error summary
       if (summary) {
-        var html = '<strong>' + (t['form.error.summary'] || 'Please correct the following errors:') + '</strong><ul>';
+        var html = '<strong>' + t['form.error.summary'] + '</strong><ul>';
         errorIds.forEach(function (fieldId) {
           var labelEl = document.querySelector('label[for="' + fieldId + '"]');
-          var labelText = labelEl ? labelEl.textContent.replace(/\s+/g, ' ').trim() : fieldId;
+          // Read only the label's own text node to exclude "(optional)" child spans
+          var labelText = fieldId;
+          if (labelEl) {
+            for (var i = 0; i < labelEl.childNodes.length; i++) {
+              var n = labelEl.childNodes[i];
+              if (n.nodeType === 3 /* TEXT_NODE */ && n.textContent.trim()) {
+                labelText = n.textContent.trim();
+                break;
+              }
+            }
+          }
           html += '<li><a href="#' + fieldId + '">' + labelText + ': ' + errors[fieldId] + '</a></li>';
         });
         html += '</ul>';
@@ -893,7 +919,7 @@
       }
 
       // Show success message
-      status.textContent = t['form.success'] || '\u2705 Your request has been submitted! We\u2019ll be in touch shortly to confirm your session.';
+      status.textContent = t['form.success'];
       form.reset();
 
       // Reset facility picker UI after submit
@@ -959,8 +985,8 @@
           facilities.forEach(function (f) {
             var o = document.createElement('option');
             o.value = f.id;
-            // Show city next to name for faster scanning
-            o.textContent = f.name + ' \u2014 ' + f.city;
+            // Show facility name and city — comma separator reads clearly with screen readers
+            o.textContent = f.name + ', ' + f.city;
             sel.appendChild(o);
           });
           sel.disabled = false;
