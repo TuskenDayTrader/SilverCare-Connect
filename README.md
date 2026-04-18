@@ -27,6 +27,11 @@ Contains the Pinellas County assisted living facility list.
       "city": "Saint Petersburg",
       "state": "FL",
       "zip": "33707",
+      "phone": "(727) 555-0100",                      // null if unknown
+      "type": "Assisted Living Facility",             // facility license type
+      "capacity": 40,                                 // licensed bed count; null if unknown
+      "pilotStatus": "active",                        // "active" | "pending" | "inactive"
+      "photoMissing": true,                           // true until real photos are added
       "photos": ["images/placeholder-facility-1.svg", ...]
     },
     ...
@@ -136,6 +141,20 @@ After starting a local server, walk through the following manual test steps:
 - Keyboard navigable — visible focus rings on all interactive elements
 - Per-field inline error messages linked via `aria-describedby`
 - Form error summary with focus management on failed submission
+
+## Documentation
+
+| File | Description |
+|------|-------------|
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Full setup guide, branching strategy, commit conventions, code style, and PR process |
+| [`docs/user-stories.md`](docs/user-stories.md) | All user stories, manual test cases, and end-to-end test scenarios |
+| [`docs/admin-screens.md`](docs/admin-screens.md) | Admin dashboard screen designs and reporting requirements |
+| [`LEGAL/PrivacyPolicy.md`](LEGAL/PrivacyPolicy.md) | Draft privacy policy |
+| [`LEGAL/TermsOfService.md`](LEGAL/TermsOfService.md) | Draft terms of service |
+| [`LEGAL/FamilyConsent.md`](LEGAL/FamilyConsent.md) | Family participation consent document |
+| [`email-templates/session-confirmation.md`](email-templates/session-confirmation.md) | Session booking confirmation email template |
+| [`email-templates/session-reminder.md`](email-templates/session-reminder.md) | 24-hour reminder email template |
+| [`email-templates/session-cancellation.md`](email-templates/session-cancellation.md) | Session cancellation email template |
 
 ## Contributor Tips
 
